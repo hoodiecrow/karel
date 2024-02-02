@@ -1,0 +1,14 @@
+
+26-element array of structs, (( toupper(char)-'A' )) index
+
+fields: replacement string/NULL
+
+---
+
+byte codes for the basic commands (plus color num for C)
+
+replacement strings compiled down to byte codes--which means they must be
+stored in case a replacement is used in another replacement
+
+=R{3L}  -> compiles to an 'L' byte code with a 3 argument
+=B{MRP} -> compiles to 'M', 'L'/3, 'P'

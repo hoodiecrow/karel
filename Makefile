@@ -1,7 +1,7 @@
 PROGRAM  = ktr
 O        = o
 HDRS     = common.h chunk.h compiler.h debug.h memory.h scanner.h value.h vm.h
-OBJS     = main.$(O) chunk.$(O) compiler.$(O) debug.$(O) memory.$(O) scanner.$(O) value.$(O) vm.$(O) object.$(O)
+OBJS     = main.$(O) chunk.$(O) compiler.$(O) debug.$(O) memory.$(O) scanner.$(O) value.$(O) vm.$(O) object.$(O) table.$(O)
 
 CC       = clang
 FEATURES =
