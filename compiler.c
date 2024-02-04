@@ -233,6 +233,7 @@ static ParseRule* getRule(TokenType type);
 static void parsePrecedence(Precedence precedence);
 
 static void binary(bool canAssign) {
+  (void)canAssign;
   TokenType operatorType = parser.previous.type;
   ParseRule* rule = getRule(operatorType);
   parsePrecedence((Precedence)(rule->precedence + 1));
@@ -255,11 +256,13 @@ static void binary(bool canAssign) {
 static uint8_t argumentList();
 
 static void call(bool canAssign) {
+  (void)canAssign;
   uint8_t argCount = argumentList();
   emitBytes(OP_CALL, argCount);
 }
 
 static void literal(bool canAssign) {
+  (void)canAssign;
   switch (parser.previous.type) {
     case TOKEN_FALSE: emitByte(OP_FALSE); break;
     case TOKEN_NIL: emitByte(OP_NIL); break;
@@ -269,16 +272,19 @@ static void literal(bool canAssign) {
 }
 
 static void grouping(bool canAssign) {
+  (void)canAssign;
   expression();
   consume(TOKEN_RIGHT_PAREN, "Expect ')' after expression.");
 }
 
 static void number(bool canAssign) {
+  (void)canAssign;
   double value = strtod(parser.previous.start, NULL);
   emitConstant(NUMBER_VAL(value));
 }
 
 static void and_(bool canAssign) {
+  (void)canAssign;
   int endJump = emitJump(OP_JUMP_IF_FALSE);
 
   emitByte(OP_POP);
@@ -288,6 +294,7 @@ static void and_(bool canAssign) {
 }
 
 static void or_(bool canAssign) {
+  (void)canAssign;
   int elseJump = emitJump(OP_JUMP_IF_FALSE);
   int endJump = emitJump(OP_JUMP);
 
@@ -299,6 +306,7 @@ static void or_(bool canAssign) {
 }
 
 static void string(bool canAssign) {
+  (void)canAssign;
   emitConstant(OBJ_VAL(copyString(parser.previous.start + 1,
                                   parser.previous.length - 2)));
 }
@@ -331,6 +339,7 @@ static void variable(bool canAssign) {
 }
 
 static void unary(bool canAssign) {
+  (void)canAssign;
   TokenType operatorType = parser.previous.type;
 
   // Compile the operand.
