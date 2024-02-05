@@ -381,12 +381,14 @@ ParseRule rules[] = {
   [TOKEN_ELSE]          = {NULL,     NULL,   PREC_NONE},
   [TOKEN_FALSE]         = {literal,  NULL,   PREC_NONE},
   [TOKEN_FOR]           = {NULL,     NULL,   PREC_NONE},
-  [TOKEN_REPEAT]        = {NULL,     NULL,   PREC_NONE},
   [TOKEN_FUN]           = {NULL,     NULL,   PREC_NONE},
+  [TOKEN_GET]           = {NULL,     NULL,   PREC_NONE},
   [TOKEN_IF]            = {NULL,     NULL,   PREC_NONE},
   [TOKEN_NIL]           = {literal,  NULL,   PREC_NONE},
   [TOKEN_OR]            = {NULL,     or_,    PREC_OR},
   [TOKEN_PRINT]         = {NULL,     NULL,   PREC_NONE},
+  [TOKEN_PUT]           = {NULL,     NULL,   PREC_NONE},
+  [TOKEN_REPEAT]        = {NULL,     NULL,   PREC_NONE},
   [TOKEN_RETURN]        = {NULL,     NULL,   PREC_NONE},
   [TOKEN_SUPER]         = {NULL,     NULL,   PREC_NONE},
   [TOKEN_THIS]          = {NULL,     NULL,   PREC_NONE},
@@ -713,16 +715,22 @@ static void declaration() {
 }
 
 static void repeatStatement();
+static void getStatement();
+static void putStatement();
 
 static void statement() {
   if (match(TOKEN_PRINT)) {
     printStatement();
   } else if (match(TOKEN_FOR)) {
     forStatement();
-  } else if (match(TOKEN_REPEAT)) {
-    repeatStatement();
+  } else if (match(TOKEN_GET)) {
+    getStatement();
   } else if (match(TOKEN_IF)) {
     ifStatement();
+  } else if (match(TOKEN_PUT)) {
+    putStatement();
+  } else if (match(TOKEN_REPEAT)) {
+    repeatStatement();
   } else if (match(TOKEN_RETURN)) {
     returnStatement();
   } else if (match(TOKEN_WHILE)) {
@@ -801,3 +809,14 @@ static void repeatStatement() {
 
   endScope();
 }
+
+static void getStatement() {
+  consume(TOKEN_SEMICOLON, "Expect ';' after 'get'.");
+  emitByte(OP_GET);
+}
+
+static void putStatement() {
+  consume(TOKEN_SEMICOLON, "Expect ';' after 'put'.");
+  emitByte(OP_PUT);
+}
+

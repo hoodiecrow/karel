@@ -8,6 +8,7 @@
 #include "debug.h"
 #include "object.h"
 #include "memory.h"
+#include "world.h"
 #include "vm.h"
 
 VM vm; 
@@ -288,6 +289,22 @@ static InterpretResult run() {
         frame = &vm.frames[vm.frameCount - 1];
         break;
       }
+      case OP_GET:
+          if (noBeepersAtCorner()) {
+            runtimeError("No beepers at current corner.");
+            return INTERPRET_RUNTIME_ERROR;
+          }
+          decrementBeepersAtCorner();
+          incrementBeeperBag();
+        break;
+      case OP_PUT:
+          if (beeperBagEmpty()) {
+            runtimeError("No beepers in beeper bag.");
+            return INTERPRET_RUNTIME_ERROR;
+          }
+          decrementBeeperBag();
+          incrementBeepersAtCorner();
+        break;
       case OP_RETURN: {
         Value result = pop();
         vm.frameCount--;

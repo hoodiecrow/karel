@@ -59,6 +59,8 @@ static void runFile(const char* path) {
 
 int main(int argc, const char* argv[]) {
   initVM();
+  initWorld();
+  initKarel();
 
   if (argc == 1) {
     repl();
