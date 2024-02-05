@@ -7,12 +7,12 @@ clox is a dynamic, object-oriented, small bytecode-compiled language. The versio
 ## karel
 I intend to add seven statement types to clox to make controlling the robot possible.
 
-- `move` -- advance one square
+- `move` -- advance one corner
 - `left` -- change facing 90° to the left
-- `put` -- put a beeper on the square
-- `get` -- remove a beeper from the square
-- `color(n)` -- color the square with color #_n_
-- `repeat(n) statement` -- repeat a (possibly compound) statemen _n_ times
+- `put` -- put a beeper on the corner
+- `get` -- remove a beeper from the corner
+- `color(n)` -- color the corner with color #_n_
+- `repeat(n) statement` -- repeat a (possibly compound) statement _n_ times (done)
 - `quit` -- shut down the robot
 
 The arena or world karel moves in will be displayed as ncurses character graphics.
