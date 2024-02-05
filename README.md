@@ -9,8 +9,8 @@ I intend to add seven statement types to clox to make controlling the robot poss
 
 - `move` -- advance one corner
 - `left` -- change facing 90° to the left
-- `put` -- put a beeper on the corner
-- `get` -- remove a beeper from the corner
+- `put` -- put a beeper on the corner (done)
+- `get` -- remove a beeper from the corner (done)
 - `color(n)` -- color the corner with color #_n_
 - `repeat(n) statement` -- repeat a (possibly compound) statement _n_ times (done)
 - `quit` -- shut down the robot
