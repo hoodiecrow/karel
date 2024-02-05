@@ -762,11 +762,12 @@ static void repeatStatement() {
   consume(TOKEN_RIGHT_PAREN, "Expect ')' after repeat constant.");
 
   // create anonymous local
+  int localIndex = current->localCount;
   Local* local = &current->locals[current->localCount++];
   local->depth = current->scopeDepth;
 
   int loopStart = currentChunk()->count;
-  emitBytes(OP_GET_LOCAL, (uint8_t)1);
+  emitBytes(OP_GET_LOCAL, (uint8_t)localIndex);
   int exitJump = -1;
   
   // create (local > 0) condition
@@ -780,10 +781,10 @@ static void repeatStatement() {
   int bodyJump = emitJump(OP_JUMP);
   int decrementStart = currentChunk()->count;
   // create (local = local - 1) expression
-  emitBytes(OP_GET_LOCAL, (uint8_t)1);
+  emitBytes(OP_GET_LOCAL, (uint8_t)localIndex);
   emitBytes(OP_CONSTANT, makeConstant(NUMBER_VAL(1)));
   emitByte(OP_SUBTRACT);
-  emitBytes(OP_SET_LOCAL, (uint8_t)1);
+  emitBytes(OP_SET_LOCAL, (uint8_t)localIndex);
   emitByte(OP_POP);
 
   emitLoop(loopStart);
