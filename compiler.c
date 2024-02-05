@@ -381,6 +381,7 @@ ParseRule rules[] = {
   [TOKEN_ELSE]          = {NULL,     NULL,   PREC_NONE},
   [TOKEN_FALSE]         = {literal,  NULL,   PREC_NONE},
   [TOKEN_FOR]           = {NULL,     NULL,   PREC_NONE},
+  [TOKEN_REPEAT]        = {NULL,     NULL,   PREC_NONE},
   [TOKEN_FUN]           = {NULL,     NULL,   PREC_NONE},
   [TOKEN_IF]            = {NULL,     NULL,   PREC_NONE},
   [TOKEN_NIL]           = {literal,  NULL,   PREC_NONE},
@@ -684,6 +685,7 @@ static void synchronize() {
       case TOKEN_FUN:
       case TOKEN_VAR:
       case TOKEN_FOR:
+      case TOKEN_REPEAT:
       case TOKEN_IF:
       case TOKEN_WHILE:
       case TOKEN_PRINT:
@@ -710,11 +712,15 @@ static void declaration() {
   if (parser.panicMode) synchronize();
 }
 
+static void repeatStatement();
+
 static void statement() {
   if (match(TOKEN_PRINT)) {
     printStatement();
   } else if (match(TOKEN_FOR)) {
     forStatement();
+  } else if (match(TOKEN_REPEAT)) {
+    repeatStatement();
   } else if (match(TOKEN_IF)) {
     ifStatement();
   } else if (match(TOKEN_RETURN)) {
@@ -746,4 +752,51 @@ ObjFunction* compile(const char* source) {
 
   ObjFunction* function = endCompiler();
   return parser.hadError ? NULL : function;
+}
+
+static void repeatStatement() {
+  beginScope();
+  consume(TOKEN_LEFT_PAREN, "Expect '(' after 'repeat'.");
+
+  expression();
+  consume(TOKEN_RIGHT_PAREN, "Expect ')' after repeat constant.");
+
+  // create anonymous local
+  Local* local = &current->locals[current->localCount++];
+  local->depth = current->scopeDepth;
+
+  int loopStart = currentChunk()->count;
+  emitBytes(OP_GET_LOCAL, (uint8_t)1);
+  int exitJump = -1;
+  
+  // create (local > 0) condition
+  emitBytes(OP_CONSTANT, makeConstant(NUMBER_VAL(0)));
+  emitByte(OP_GREATER);
+
+  // Jump out of the loop if the condition is false.
+  exitJump = emitJump(OP_JUMP_IF_FALSE);
+  emitByte(OP_POP); // Condition.
+
+  int bodyJump = emitJump(OP_JUMP);
+  int decrementStart = currentChunk()->count;
+  // create (local = local - 1) expression
+  emitBytes(OP_GET_LOCAL, (uint8_t)1);
+  emitBytes(OP_CONSTANT, makeConstant(NUMBER_VAL(1)));
+  emitByte(OP_SUBTRACT);
+  emitBytes(OP_SET_LOCAL, (uint8_t)1);
+  emitByte(OP_POP);
+
+  emitLoop(loopStart);
+  loopStart = decrementStart;
+  patchJump(bodyJump);
+
+  statement();
+  emitLoop(loopStart);
+
+  if (exitJump != -1) {
+    patchJump(exitJump);
+    emitByte(OP_POP); // Condition.
+  }
+
+  endScope();
 }
