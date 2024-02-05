@@ -289,6 +289,19 @@ static InterpretResult run() {
         frame = &vm.frames[vm.frameCount - 1];
         break;
       }
+      case OP_MOVE:
+        if (moveOffEdge() || frontIsBlocked()) {
+            runtimeError("Forbidden movement.");
+            return INTERPRET_RUNTIME_ERROR;
+        }
+        moveToNext();
+        break;
+      case OP_LEFT:
+        turnLeft();
+        break;
+      case OP_QUIT:
+        // compare world and robot to expected outcome
+        break;
       case OP_GET:
           if (noBeepersAtCorner()) {
             runtimeError("No beepers at current corner.");

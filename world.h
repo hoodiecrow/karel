@@ -31,5 +31,9 @@ void decrementBeeperBag(void);
 void incrementBeeperBag(void);
 void decrementBeepersAtCorner(void);
 void incrementBeepersAtCorner(void);
+bool frontIsBlocked(void);
+bool moveOffEdge(void);
+void moveToNext(void);
+void turnLeft(void);
 
 #endif

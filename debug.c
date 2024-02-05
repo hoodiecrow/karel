@@ -25,6 +25,16 @@ static int simpleInstruction(const char* name, int offset) {
   return offset + 1;
 }
 
+static int directionInstruction(const char* name, int offset) {
+  printf("%-16s %4d\n", name, karel.direction);
+  return offset + 1;
+}
+
+static int positionInstruction(const char* name, int offset) {
+  printf("%-16s %d/%d\n", name, karel.avenue, karel.street);
+  return offset + 1;
+}
+
 static int byteInstruction(const char* name, Chunk* chunk, int offset) {
   uint8_t slot = chunk->code[offset + 1];
   printf("%-16s %4d\n", name, slot);
@@ -88,10 +98,16 @@ int disassembleInstruction(Chunk* chunk, int offset) {
       return simpleInstruction("OP_NEGATE", offset);
     case OP_GET:
       return simpleInstruction("OP_GET", offset);
+    case OP_LEFT:
+      return directionInstruction("OP_LEFT", offset);
+    case OP_MOVE:
+      return positionInstruction("OP_MOVE", offset);
     case OP_PUT:
       return simpleInstruction("OP_PUT", offset);
     case OP_PRINT:
       return simpleInstruction("OP_PRINT", offset);
+    case OP_QUIT:
+      return simpleInstruction("OP_QUIT", offset);
     case OP_JUMP:
       return jumpInstruction("OP_JUMP", 1, chunk, offset);
     case OP_JUMP_IF_FALSE:

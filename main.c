@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "common.h"
+#include "world.h"
 #include "vm.h"
 
 static void repl() {

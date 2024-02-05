@@ -716,7 +716,10 @@ static void declaration() {
 
 static void repeatStatement();
 static void getStatement();
+static void leftStatement();
+static void moveStatement();
 static void putStatement();
+static void quitStatement();
 
 static void statement() {
   if (match(TOKEN_PRINT)) {
@@ -727,8 +730,14 @@ static void statement() {
     getStatement();
   } else if (match(TOKEN_IF)) {
     ifStatement();
+  } else if (match(TOKEN_LEFT)) {
+    leftStatement();
+  } else if (match(TOKEN_MOVE)) {
+    moveStatement();
   } else if (match(TOKEN_PUT)) {
     putStatement();
+  } else if (match(TOKEN_QUIT)) {
+    quitStatement();
   } else if (match(TOKEN_REPEAT)) {
     repeatStatement();
   } else if (match(TOKEN_RETURN)) {
@@ -815,8 +824,24 @@ static void getStatement() {
   emitByte(OP_GET);
 }
 
+static void leftStatement() {
+  consume(TOKEN_SEMICOLON, "Expect ';' after 'left'.");
+  emitByte(OP_LEFT);
+}
+
+static void moveStatement() {
+  consume(TOKEN_SEMICOLON, "Expect ';' after 'move'.");
+  emitByte(OP_MOVE);
+}
+
 static void putStatement() {
   consume(TOKEN_SEMICOLON, "Expect ';' after 'put'.");
   emitByte(OP_PUT);
 }
+
+static void quitStatement() {
+  consume(TOKEN_SEMICOLON, "Expect ';' after 'quit'.");
+  emitByte(OP_QUIT);
+}
+
 
