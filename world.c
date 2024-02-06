@@ -1,7 +1,10 @@
 
 #include "world.h"
 
-Corner world[8][8];
+#define NUM_AVENUES 8
+#define NUM_STREETS 8
+
+Corner world[NUM_AVENUES][NUM_STREETS];
 Robot karel;
 
 void initKarel(void) {
@@ -13,8 +16,8 @@ void initKarel(void) {
 }
 
 void initWorld(void) {
-    for (int a = 1; a <= 8; a++) {
-        for (int s = 1; s <= 8; s++) {
+    for (int a = 1; a <= NUM_AVENUES; a++) {
+        for (int s = 1; s <= NUM_STREETS; s++) {
             world[a][s].color = 0;
             world[a][s].beepers = 0;
         }
@@ -60,8 +63,8 @@ bool frontIsBlocked(void) {
 
 bool moveOffEdge(void) {
   switch (karel.direction) {
-    case 0: return karel.avenue == 8;
-    case 1: return karel.street == 8;
+    case 0: return karel.avenue == NUM_AVENUES;
+    case 1: return karel.street == NUM_STREETS;
     case 2: return karel.avenue == 1;
     case 3: return karel.street == 1;
   }
