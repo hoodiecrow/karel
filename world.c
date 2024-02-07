@@ -20,7 +20,32 @@ void initWorld(void) {
         for (int s = 1; s <= NUM_STREETS; s++) {
             world[a][s].color = 0;
             world[a][s].beepers = 0;
+            if (a == 1)
+                world[a][s].wallWest = true;
+            else if (a == NUM_AVENUES)
+                world[a][s].wallEast = true;
+            else if (s == 1)
+                world[a][s].wallSouth = true;
+            else if (s == NUM_STREETS)
+                world[a][s].wallNorth = true;
         }
+    }
+}
+
+void placeWall(int avenue, int street, int direction) {
+    // duplicate a wall from the opposite direction
+    if (direction == 0) {
+        world[avenue][street].wallEast = true;
+        world[avenue + 1][street].wallWest = true;
+    } else if (direction == 1) {
+        world[avenue][street].wallNorth = true;
+        world[avenue][street + 1].wallSouth = true;
+    } else if (direction == 2) {
+        world[avenue][street].wallWest = true;
+        world[avenue - 1][street].wallEast = true;
+    } else if (direction == 3) {
+        world[avenue][street].wallSouth = true;
+        world[avenue][street - 1].wallNorth = true;
     }
 }
 
@@ -49,25 +74,10 @@ void incrementBeepersAtCorner(void) {
 }
 
 bool frontIsBlocked(void) {
-  switch (karel.direction) {
-    case 0:
-        break;
-    case 1:
-        break;
-    case 2:
-        break;
-    case 3:
-        break;
-  }
-}
-
-bool moveOffEdge(void) {
-  switch (karel.direction) {
-    case 0: return karel.avenue == NUM_AVENUES;
-    case 1: return karel.street == NUM_STREETS;
-    case 2: return karel.avenue == 1;
-    case 3: return karel.street == 1;
-  }
+    return (karel.direction == 0 && world[karel.avenue][karel.street].wallEast) ||
+        (karel.direction == 1 && world[karel.avenue][karel.street].wallNorth) ||
+        (karel.direction == 2 && world[karel.avenue][karel.street].wallWest) ||
+        (karel.direction == 3 && world[karel.avenue][karel.street].wallSouth);
 }
 
 void moveToNext(void) {

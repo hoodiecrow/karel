@@ -290,7 +290,7 @@ static InterpretResult run() {
         break;
       }
       case OP_MOVE:
-        if (moveOffEdge() || frontIsBlocked()) {
+        if (frontIsBlocked()) {
             runtimeError("Forbidden movement.");
             return INTERPRET_RUNTIME_ERROR;
         }

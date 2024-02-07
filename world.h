@@ -6,6 +6,10 @@
 typedef struct {
   int color;
   int beepers;
+  bool wallEast;
+  bool wallNorth;
+  bool wallWest;
+  bool wallSouth;
 } Corner;
 
 typedef struct {
@@ -18,6 +22,8 @@ typedef struct {
 
 /*
  * direction: 0 = > / East, 1 = ^ / North, 2 = < / West, 3 = v / South
+ *
+ * 0 beepers: +; n beepers (1-9): n; n beepers (10+): *
  */
 
 extern Corner world[8][8];
