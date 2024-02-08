@@ -15,6 +15,12 @@ void initKarel(void) {
     karel.street = 1;
 }
 
+void robot(int avenue, int street, int direction) {
+    karel.avenue = avenue;
+    karel.street = street;
+    karel.direction = direction;
+}
+
 void initWorld(void) {
     for (int a = 1; a <= NUM_AVENUES; a++) {
         for (int s = 1; s <= NUM_STREETS; s++) {

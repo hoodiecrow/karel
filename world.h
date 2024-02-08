@@ -31,6 +31,7 @@ extern Robot karel;
 
 void initKarel(void);
 void initWorld(void);
+void robot(int avenue, int street, int direction);
 bool beeperBagEmpty(void);
 bool noBeepersAtCorner(void);
 void decrementBeeperBag(void);
