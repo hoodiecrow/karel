@@ -1,13 +1,15 @@
 
 #include "world.h"
 
-#define NUM_AVENUES 8
-#define NUM_STREETS 8
+// most worlds will be smaller in practice
+int NUM_AVENUES = 16;
+int NUM_STREETS = 16;
 
-Corner world[NUM_AVENUES][NUM_STREETS];
+Corner world[16][16];
+
 Robot karel;
 
-void initKarel(void) {
+void defaultRobot(void) {
     karel.color = 0;
     karel.beepers = 0;
     karel.direction = 0;
@@ -15,13 +17,21 @@ void initKarel(void) {
     karel.street = 1;
 }
 
-void robot(int avenue, int street, int direction) {
-    karel.avenue = avenue;
-    karel.street = street;
-    karel.direction = direction;
-}
-
-void initWorld(void) {
+void initWorld(Value avenues, Value streets) {
+    if (!IS_NUMBER(avenues)) {
+        runtimeError("avenues is not a number.");
+        return;
+    }
+    NUM_AVENUES = AS_NUMBER(avenues);
+    if (NUM_AVENUES > 16)
+        NUM_AVENUES = 16;
+    if (!IS_NUMBER(streets)) {
+        runtimeError("streets is not a number.");
+        return;
+    }
+    NUM_STREETS = AS_NUMBER(streets);
+    if (NUM_STREETS > 16)
+        NUM_STREETS = 16;
     for (int a = 1; a <= NUM_AVENUES; a++) {
         for (int s = 1; s <= NUM_STREETS; s++) {
             world[a][s].color = 0;
@@ -38,20 +48,138 @@ void initWorld(void) {
     }
 }
 
-void placeWall(int avenue, int street, int direction) {
+void initRobot(Value avenue, Value street, Value direction, Value beepers) {
+    if (!IS_NUMBER(avenue)) {
+        runtimeError("avenue is not a number.");
+        return;
+    }
+    karel.avenue = AS_NUMBER(avenue);
+    if (karel.avenue < 1)
+        karel.avenue = 1;
+    if (karel.avenue > NUM_AVENUES)
+        karel.avenue = NUM_AVENUES;
+
+    if (!IS_NUMBER(street)) {
+        runtimeError("street is not a number.");
+        return;
+    }
+    karel.street = AS_NUMBER(street);
+    if (karel.street < 1)
+        karel.street = 1;
+    if (karel.street > NUM_STREETS)
+        karel.street = NUM_STREETS;
+
+    if (!IS_NUMBER(direction)) {
+        runtimeError("direction is not a number.");
+        return;
+    }
+    karel.direction = (int)AS_NUMBER(direction) % 4;
+
+    if (!IS_NUMBER(beepers)) {
+        runtimeError("beepers is not a number.");
+        return;
+    }
+    karel.beepers = AS_NUMBER(beepers);
+}
+
+void placeHome(Value avenue, Value street) {
+    if (!IS_NUMBER(avenue)) {
+        runtimeError("avenue is not a number.");
+        return;
+    }
+    int havenue = AS_NUMBER(avenue);
+    if (havenue < 1)
+        havenue = 1;
+    if (havenue > NUM_AVENUES)
+        havenue = NUM_AVENUES;
+
+    if (!IS_NUMBER(street)) {
+        runtimeError("street is not a number.");
+        return;
+    }
+    int hstreet = AS_NUMBER(street);
+    if (hstreet < 1)
+        hstreet = 1;
+    if (hstreet > NUM_STREETS)
+        hstreet = NUM_STREETS;
+    world[havenue][hstreet].home = true;
+}
+
+void placeBeepers(Value avenue, Value street, Value number) {
+    if (!IS_NUMBER(avenue)) {
+        runtimeError("avenue is not a number.");
+        return;
+    }
+    int bavenue = AS_NUMBER(avenue);
+    if (bavenue < 1)
+        bavenue = 1;
+    if (bavenue > NUM_AVENUES)
+        bavenue = NUM_AVENUES;
+
+    if (!IS_NUMBER(street)) {
+        runtimeError("street is not a number.");
+        return;
+    }
+    int bstreet = AS_NUMBER(street);
+    if (bstreet < 1)
+        bstreet = 1;
+    if (bstreet > NUM_STREETS)
+        bstreet = NUM_STREETS;
+
+    if (!IS_NUMBER(number)) {
+        runtimeError("number is not a number."); // oh yes
+        return;
+    }
+    int bnumber = AS_NUMBER(number);
+    world[bavenue][bstreet].beepers = bnumber;
+}
+
+void placeWall(Value avenue, Value street, Value direction) {
+    if (!IS_NUMBER(avenue)) {
+        runtimeError("avenue is not a number.");
+        return;
+    }
+    int wavenue = AS_NUMBER(avenue);
+    if (wavenue < 1)
+        wavenue = 1;
+    if (wavenue > NUM_AVENUES)
+        wavenue = NUM_AVENUES;
+
+    if (!IS_NUMBER(street)) {
+        runtimeError("street is not a number.");
+        return;
+    }
+    int wstreet = AS_NUMBER(street);
+    if (wstreet < 1)
+        wstreet = 1;
+    if (wstreet > NUM_STREETS)
+        wstreet = NUM_STREETS;
+
+    if (!IS_NUMBER(direction)) {
+        runtimeError("direction is not a number.");
+        return;
+    }
+    int wdirection = AS_NUMBER(direction);
+    // don't place a piece of wall at the border
+    if ((wdirection == 0 && wavenue == NUM_AVENUES) || 
+        (wdirection == 1 && wstreet == NUM_STREETS) || 
+        (wdirection == 2 && wavenue == 1) || 
+        (wdirection == 3 && wstreet == 1))
+        return;
+    
     // duplicate a wall from the opposite direction
-    if (direction == 0) {
-        world[avenue][street].wallEast = true;
-        world[avenue + 1][street].wallWest = true;
-    } else if (direction == 1) {
-        world[avenue][street].wallNorth = true;
-        world[avenue][street + 1].wallSouth = true;
-    } else if (direction == 2) {
-        world[avenue][street].wallWest = true;
-        world[avenue - 1][street].wallEast = true;
-    } else if (direction == 3) {
-        world[avenue][street].wallSouth = true;
-        world[avenue][street - 1].wallNorth = true;
+    if (wdirection == 0) {
+        world[wavenue][wstreet].wallEast = true;
+        world[wavenue + 1][wstreet].wallWest = true;
+    } else if (wdirection == 1) {
+        world[wavenue][wstreet].wallNorth = true;
+        world[wavenue][wstreet + 1].wallSouth = true;
+    } else if (wdirection == 2) {
+        world[wavenue][wstreet].wallWest = true;
+        world[wavenue - 1][wstreet].wallEast = true;
+    } else if (wdirection == 3) {
+        world[wavenue][wstreet].wallSouth = true;
+        world[wavenue][wstreet - 1].wallNorth = true;
     }
 }
 

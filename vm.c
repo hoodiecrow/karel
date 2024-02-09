@@ -16,8 +16,63 @@ VM vm;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
 
-static Value clockNative(int argCount, Value* args) {
-  return NUMBER_VAL((double)clock() / CLOCKS_PER_SEC);
+static Value worldNative(int argCount, Value* args) {
+    if (argCount != 2) {
+        runtimeError("Expected 2 arguments but got %d.", argCount);
+        return NIL_VAL;
+    }
+    Value avenue = args[0];
+    Value street = args[1];
+    initWorld(avenue, street);
+    return NIL_VAL;
+}
+
+static Value robotNative(int argCount, Value* args) {
+    if (argCount != 4) {
+        runtimeError("Expected 4 arguments but got %d.", argCount);
+        return NIL_VAL;
+    }
+    Value avenue = args[0];
+    Value street = args[1];
+    Value direction = args[2];
+    Value beepers = args[3];
+    initRobot(avenue, street, direction, beepers);
+    return NIL_VAL;
+}
+
+static Value homeNative(int argCount, Value* args) {
+    if (argCount != 2) {
+        runtimeError("Expected 2 arguments but got %d.", argCount);
+        return NIL_VAL;
+    }
+    Value avenue = args[0];
+    Value street = args[1];
+    placeHome(avenue, street);
+    return NIL_VAL;
+}
+
+static Value beepersNative(int argCount, Value* args) {
+    if (argCount != 3) {
+        runtimeError("Expected 3 arguments but got %d.", argCount);
+        return NIL_VAL;
+    }
+    Value avenue = args[0];
+    Value street = args[1];
+    Value number = args[2];
+    placeBeepers(avenue, street, number);
+    return NIL_VAL;
+}
+
+static Value wallNative(int argCount, Value* args) {
+    if (argCount != 3) {
+        runtimeError("Expected 3 arguments but got %d.", argCount);
+        return NIL_VAL;
+    }
+    Value avenue = args[0];
+    Value street = args[1];
+    Value direction = args[2];
+    placeWall(avenue, street, direction);
+    return NIL_VAL;
 }
 
 #pragma clang diagnostic pop
@@ -27,7 +82,7 @@ static void resetStack() {
   vm.frameCount = 0;
 }
 
-static void runtimeError(const char* format, ...) {
+void runtimeError(const char* format, ...) {
   va_list args;
   va_start(args, format);
   vfprintf(stderr, format, args);
@@ -65,7 +120,11 @@ void initVM() {
   initTable(&vm.globals);
   initTable(&vm.strings);
 
-  defineNative("clock", clockNative);
+  defineNative("world", worldNative);
+  defineNative("robot", robotNative);
+  defineNative("home", homeNative);
+  defineNative("beepers", beepersNative);
+  defineNative("wall", wallNative);
 }
 
 void freeVM() {

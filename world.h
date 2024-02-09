@@ -2,10 +2,13 @@
 #define ktr_world_h
 
 #include "common.h"
+#include "value.h"
+#include "vm.h"
 
 typedef struct {
   int color;
   int beepers;
+  bool home;
   bool wallEast;
   bool wallNorth;
   bool wallWest;
@@ -26,12 +29,15 @@ typedef struct {
  * 0 beepers: +; n beepers (1-9): n; n beepers (10+): *
  */
 
-extern Corner world[8][8];
+extern Corner world[16][16];
 extern Robot karel;
 
-void initKarel(void);
-void initWorld(void);
-void robot(int avenue, int street, int direction);
+void defaultRobot(void);
+void initWorld(Value avenues, Value streets);
+void initRobot(Value avenue, Value street, Value direction, Value beepers);
+void placeHome(Value avenue, Value street);
+void placeBeepers(Value avenue, Value street, Value number);
+void placeWall(Value avenue, Value street, Value direction);
 bool beeperBagEmpty(void);
 bool noBeepersAtCorner(void);
 void decrementBeeperBag(void);

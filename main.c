@@ -66,8 +66,7 @@ static void runFile(const char* path) {
 
 int main(int argc, const char* argv[]) {
   initVM();
-  initWorld();
-  initKarel();
+  defaultRobot();
 
   if (argc == 1) {
     repl();
