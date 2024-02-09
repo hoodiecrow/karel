@@ -7,8 +7,8 @@ clox is a dynamic, object-oriented, small bytecode-compiled language. The versio
 ## karel
 I intend to add seven statement types to clox to make controlling the robot possible.
 
-- `move` -- advance one corner
-- `left` -- change facing 90° to the left
+- `move` -- advance one corner (done)
+- `left` -- change facing 90° to the left (done)
 - `put` -- put a beeper on the corner (done)
 - `get` -- remove a beeper from the corner (done)
 - `color(n)` -- color the corner with color #_n_
@@ -16,6 +16,14 @@ I intend to add seven statement types to clox to make controlling the robot poss
 - `quit` -- shut down the robot
 
 The arena or world karel moves in will be displayed as ncurses character graphics.
+
+## Initialization
+The functions `world`, `home`, `robot`, `beepers`, and `wall` have been added to initialize the world parts. They are defined using the native function interface (such as it is).
+- world(av, st) sets the size of the world to 1..av x 1..st
+- home(av, st) sets the location where the robot is supposed to end up (if not set, the robot can shut down anywhere)
+- robot(av, st, d, n) sets the robot at avenue _av_, street _st_, facing direction _d_, and carrying _n_ beepers
+- beepers(av, st, n) sets down _n_ beepers at avenue _av_, street _st_
+- wall(av, st, d) sets down a wall near avenue _av_, street _st_, blocking the way in direction d (and also from the opposite direction)
 
 ## Acknowledgements
 clox belongs to Robert Nystrom. Karel the Robot was designed by Richard E. Pattis. 
