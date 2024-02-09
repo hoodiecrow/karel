@@ -38,6 +38,8 @@ void initRobot(Value avenue, Value street, Value direction, Value beepers);
 void placeHome(Value avenue, Value street);
 void placeBeepers(Value avenue, Value street, Value number);
 void placeWall(Value avenue, Value street, Value direction);
+bool facingDirection(Value direction);
+bool facingIsBlocked(Value facing);
 bool beeperBagEmpty(void);
 bool noBeepersAtCorner(void);
 void decrementBeeperBag(void);

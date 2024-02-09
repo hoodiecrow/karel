@@ -159,7 +159,7 @@ void placeWall(Value avenue, Value street, Value direction) {
         runtimeError("direction is not a number.");
         return;
     }
-    int wdirection = AS_NUMBER(direction);
+    int wdirection = (int)AS_NUMBER(direction) % 4;
     // don't place a piece of wall at the border
     if ((wdirection == 0 && wavenue == NUM_AVENUES) || 
         (wdirection == 1 && wstreet == NUM_STREETS) || 
@@ -233,4 +233,37 @@ void moveToNext(void) {
 
 void turnLeft(void) {
     karel.direction = (karel.direction + 1) % 4;
+}
+
+bool facingDirection(Value direction) {
+    if (!IS_NUMBER(direction)) {
+        runtimeError("direction is not a number.");
+        return false;
+    }
+    int dir = (int)AS_NUMBER(direction) % 4;
+    return dir == karel.direction;
+}
+
+bool facingIsBlocked(Value facing) {
+    // 0 = front; 1 = left; -1 = right
+    if (!IS_NUMBER(facing)) {
+        runtimeError("facing is not a number.");
+        return false;
+    }
+    int f = AS_NUMBER(facing);
+    if (!(f == 0 || f == 1 || f == -1)) {
+        runtimeError("invalid facing.");
+        return false;
+    }
+    int dir = (karel.direction + 4 + f) % 4;
+    if (dir == 0)
+        return world[karel.avenue][karel.street].wallEast;
+    else if (dir == 1)
+        return world[karel.avenue][karel.street].wallNorth;
+    else if (dir == 2)
+        return world[karel.avenue][karel.street].wallWest;
+    else if (dir == 3)
+        return world[karel.avenue][karel.street].wallSouth;
+    else
+        return false; // unreachable
 }
