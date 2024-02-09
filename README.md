@@ -1,8 +1,8 @@
 # karel
-An implementation of the classic Karel the Robot educational program, based on the clox language infrastructure from the book "Crafting Interpreters" by Robert Nystrom.
+An implementation of the classic Karel the Robot educational program, based on clox from the book "Crafting Interpreters" by Robert Nystrom.
 
 ## clox
-clox is a dynamic, object-oriented, small bytecode-compiled language. The version I am using here uses code from up to and including chapter 24. That is, it doesn't have closures, garbage collection, or actual OOP features.
+Lox is a small, dynamic, object-oriented language, and clox is a bytecode interpreter for Lox. The version I am using here uses code from up to and including chapter 24 of the book. That is, it doesn't have closures, garbage collection, or actual OOP features.
 
 ## karel
 I intend to add seven statement types to clox to make controlling the robot possible.
