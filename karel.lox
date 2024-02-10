@@ -1,5 +1,0 @@
-var east = 0;
-var north = 1;
-var west = 2;
-var south = 3;
-
