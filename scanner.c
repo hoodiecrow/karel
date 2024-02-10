@@ -110,6 +110,13 @@ static TokenType checkKeyword(int start, int length,
 
 static TokenType identifierType() {
   switch (scanner.start[0]) {
+    case 'E': return checkKeyword(1, 3, "AST", TOKEN_C_EAST);
+    case 'F': return checkKeyword(1, 4, "RONT", TOKEN_C_FRONT);
+    case 'L': return checkKeyword(1, 3, "EFT", TOKEN_C_LEFT);
+    case 'N': return checkKeyword(1, 4, "ORTH", TOKEN_C_NORTH);
+    case 'R': return checkKeyword(1, 4, "IGHT", TOKEN_C_RIGHT);
+    case 'S': return checkKeyword(1, 4, "OUTH", TOKEN_C_SOUTH);
+    case 'W': return checkKeyword(1, 3, "EST", TOKEN_C_WEST);
     case 'a': return checkKeyword(1, 2, "nd", TOKEN_AND);
     case 'c': return checkKeyword(1, 4, "lass", TOKEN_CLASS);
     case 'e': return checkKeyword(1, 3, "lse", TOKEN_ELSE);

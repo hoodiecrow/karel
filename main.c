@@ -50,14 +50,8 @@ static char* readFile(const char* path) {
 }
 
 static void runFile(const char* path) {
-  char* prelude = readFile("karel.lox");
-  char* codefile = readFile(path);
-  char* source = malloc(strlen(prelude) + strlen(codefile) + 1);
-  strcpy(source, prelude);
-  strcat(source, codefile);
+  char* source = readFile(path);
   InterpretResult result = interpret(source);
-  free(prelude);
-  free(codefile);
   free(source); 
 
   if (result == INTERPRET_COMPILE_ERROR) exit(65);

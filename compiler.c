@@ -267,6 +267,13 @@ static void literal(bool canAssign) {
     case TOKEN_FALSE: emitByte(OP_FALSE); break;
     case TOKEN_NIL: emitByte(OP_NIL); break;
     case TOKEN_TRUE: emitByte(OP_TRUE); break;
+    case TOKEN_C_EAST: emitConstant(NUMBER_VAL(0)); break;
+    case TOKEN_C_NORTH: emitConstant(NUMBER_VAL(1)); break;
+    case TOKEN_C_WEST: emitConstant(NUMBER_VAL(2)); break;
+    case TOKEN_C_SOUTH: emitConstant(NUMBER_VAL(3)); break;
+    case TOKEN_C_FRONT: emitConstant(NUMBER_VAL(0)); break;
+    case TOKEN_C_LEFT: emitConstant(NUMBER_VAL(1)); break;
+    case TOKEN_C_RIGHT: emitConstant(NUMBER_VAL(-1)); break;
     default: return; // Unreachable.
   }
 }
@@ -395,6 +402,13 @@ ParseRule rules[] = {
   [TOKEN_TRUE]          = {literal,  NULL,   PREC_NONE},
   [TOKEN_VAR]           = {NULL,     NULL,   PREC_NONE},
   [TOKEN_WHILE]         = {NULL,     NULL,   PREC_NONE},
+  [TOKEN_C_EAST]        = {literal,  NULL,   PREC_NONE},
+  [TOKEN_C_FRONT]       = {literal,  NULL,   PREC_NONE},
+  [TOKEN_C_LEFT]        = {literal,  NULL,   PREC_NONE},
+  [TOKEN_C_NORTH]       = {literal,  NULL,   PREC_NONE},
+  [TOKEN_C_RIGHT]       = {literal,  NULL,   PREC_NONE},
+  [TOKEN_C_SOUTH]       = {literal,  NULL,   PREC_NONE},
+  [TOKEN_C_WEST]        = {literal,  NULL,   PREC_NONE},
   [TOKEN_ERROR]         = {NULL,     NULL,   PREC_NONE},
   [TOKEN_EOF]           = {NULL,     NULL,   PREC_NONE},
 };
