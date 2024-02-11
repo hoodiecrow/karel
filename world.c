@@ -207,13 +207,6 @@ void incrementBeepersAtCorner(void) {
     world[karel.avenue][karel.street].beepers++;
 }
 
-bool frontIsBlocked(void) {
-    return (karel.direction == 0 && world[karel.avenue][karel.street].wallEast) ||
-        (karel.direction == 1 && world[karel.avenue][karel.street].wallNorth) ||
-        (karel.direction == 2 && world[karel.avenue][karel.street].wallWest) ||
-        (karel.direction == 3 && world[karel.avenue][karel.street].wallSouth);
-}
-
 void moveToNext(void) {
   switch (karel.direction) {
     case 0:

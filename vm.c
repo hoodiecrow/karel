@@ -387,7 +387,7 @@ static InterpretResult run() {
         break;
       }
       case OP_MOVE:
-        if (frontIsBlocked()) {
+        if (facingIsBlocked(NUMBER_VAL(0))) {
             runtimeError("Forbidden movement.");
             return INTERPRET_RUNTIME_ERROR;
         }
