@@ -19,15 +19,15 @@ The arena or world karel moves in will be displayed as ncurses character graphic
 
 ### Initialization
 The functions `world`, `home`, `robot`, `beepers`, and `wall` have been added to initialize the world parts. They are defined using the native function interface (such as it is).
-- world(av, st) sets the size of the world to 1..av x 1..st
-- home(av, st) sets the location where the robot is supposed to end up (if not set, the robot can shut down anywhere)
-- robot(av, st, d, n) sets the robot at avenue _av_, street _st_, facing direction _d_, and carrying _n_ beepers
-- beepers(av, st, n) sets down _n_ beepers at avenue _av_, street _st_
-- wall(av, st, d) sets down a wall near avenue _av_, street _st_, blocking the way in direction d (and also from the opposite direction)
+- world(x, y) sets the size of the world to _x_ avenues and _y_ streets; neither can exceed 16
+- home(x, x) sets the location where the robot is supposed to end up to _x_ avenue, _y_ street (if not set, the robot can shut down anywhere)
+- robot(x, y, d, n) sets the robot at _x_ avenue, _y_ street, facing direction _d_ (`EAST` (0), `NORTH` (1), `WEST` (2), or `SOUTH` (3)), and carrying _n_ beepers
+- beepers(x, y, n) sets down _n_ beepers at _x_ avenue, _y_ street
+- wall(x, y, d) sets down a wall near _x_ avenue, _y_ street, blocking the way in direction _d_ (and also from the opposite direction)
 
 ### Conditions
 - facing(dir) verifies that the robot is facing in the given direction
-- blocked(facing) is true if there is a wall in the front (0), left (1), or right (-1) facing
+- blocked(facing) is true if there is a wall in the `FRONT` (0), `LEFT` (1), or `RIGHT` (-1) facing
 - beepersAtCorner() is true if there is at least one beeper on the corner where the robot is located
 - beeperBagEmpty() is true if there are no beepers in the robot's beeper bag
 
