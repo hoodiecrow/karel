@@ -26,9 +26,9 @@ The functions `world`, `home`, `robot`, `beepers`, and `wall` have been added to
 - wall(x, y, d) sets down a wall near _x_ avenue, _y_ street, blocking the way in direction _d_ (and also from the opposite direction)
 
 ### Conditions
-- facing(dir) verifies that the robot is facing in the given direction
+- facing(dir) is true if the robot is facing in the given direction
 - blocked(facing) is true if there is a wall in the `FRONT` (0), `LEFT` (1), or `RIGHT` (-1) facing
-- beepersAtCorner() is true if there is at least one beeper on the corner where the robot is located
+- beepersAtCorner() is true if there is at least one beeper at the corner where the robot is located
 - beeperBagEmpty() is true if there are no beepers in the robot's beeper bag
 
 ## Acknowledgements
