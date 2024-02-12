@@ -19,84 +19,150 @@ VM vm;
 static Value worldNative(int argCount, Value* args) {
     if (argCount != 2) {
         runtimeError("Expected 2 arguments but got %d.", argCount);
-        return NIL_VAL;
+        return ERR_VAL;
     }
-    Value avenue = args[0];
-    Value street = args[1];
-    initWorld(avenue, street);
-    return NIL_VAL;
+    Value avenues = args[0];
+    if (!IS_NUMBER(avenues)) {
+        runtimeError("avenues is not a number.");
+        return ERR_VAL;
+    }
+    Value streets = args[1];
+    if (!IS_NUMBER(streets)) {
+        runtimeError("streets is not a number.");
+        return ERR_VAL;
+    }
+    return initWorld(AS_NUMBER(avenues), AS_NUMBER(streets)) ? ERR_VAL : NIL_VAL;
 }
 
 static Value robotNative(int argCount, Value* args) {
     if (argCount != 4) {
         runtimeError("Expected 4 arguments but got %d.", argCount);
-        return NIL_VAL;
+        return ERR_VAL;
     }
     Value avenue = args[0];
+    if (!IS_NUMBER(avenue)) {
+        runtimeError("avenue is not a number.");
+        return ERR_VAL;
+    }
     Value street = args[1];
+    if (!IS_NUMBER(street)) {
+        runtimeError("street is not a number.");
+        return ERR_VAL;
+    }
     Value direction = args[2];
+    if (!IS_NUMBER(direction)) {
+        runtimeError("direction is not a number.");
+        return ERR_VAL;
+    }
     Value beepers = args[3];
-    initRobot(avenue, street, direction, beepers);
-    return NIL_VAL;
+    if (!IS_NUMBER(beepers)) {
+        runtimeError("beepers is not a number.");
+        return ERR_VAL;
+    }
+    return initRobot(AS_NUMBER(avenue), AS_NUMBER(street),
+            AS_NUMBER(direction), AS_NUMBER(beepers)) ? ERR_VAL : NIL_VAL;
 }
 
 static Value homeNative(int argCount, Value* args) {
     if (argCount != 2) {
         runtimeError("Expected 2 arguments but got %d.", argCount);
-        return NIL_VAL;
+        return ERR_VAL;
     }
     Value avenue = args[0];
+    if (!IS_NUMBER(avenue)) {
+        runtimeError("avenue is not a number.");
+        return ERR_VAL;
+    }
     Value street = args[1];
-    placeHome(avenue, street);
-    return NIL_VAL;
+    if (!IS_NUMBER(street)) {
+        runtimeError("street is not a number.");
+        return ERR_VAL;
+    }
+    return placeHome(AS_NUMBER(avenue), AS_NUMBER(street)) ? ERR_VAL : NIL_VAL;
 }
 
 static Value beepersNative(int argCount, Value* args) {
     if (argCount != 3) {
         runtimeError("Expected 3 arguments but got %d.", argCount);
-        return NIL_VAL;
+        return ERR_VAL;
     }
     Value avenue = args[0];
+    if (!IS_NUMBER(avenue)) {
+        runtimeError("avenue is not a number.");
+        return ERR_VAL;
+    }
     Value street = args[1];
+    if (!IS_NUMBER(street)) {
+        runtimeError("street is not a number.");
+        return ERR_VAL;
+    }
     Value number = args[2];
-    placeBeepers(avenue, street, number);
-    return NIL_VAL;
+    if (!IS_NUMBER(number)) {
+        runtimeError("number is not a number."); // oh yes
+        return ERR_VAL;
+    }
+    return placeBeepers(AS_NUMBER(avenue), AS_NUMBER(street),
+            AS_NUMBER(number)) ? ERR_VAL : NIL_VAL;
 }
 
 static Value wallNative(int argCount, Value* args) {
     if (argCount != 3) {
         runtimeError("Expected 3 arguments but got %d.", argCount);
-        return NIL_VAL;
+        return ERR_VAL;
     }
     Value avenue = args[0];
+    if (!IS_NUMBER(avenue)) {
+        runtimeError("avenue is not a number.");
+        return ERR_VAL;
+    }
     Value street = args[1];
+    if (!IS_NUMBER(street)) {
+        runtimeError("street is not a number.");
+        return ERR_VAL;
+    }
     Value direction = args[2];
-    placeWall(avenue, street, direction);
-    return NIL_VAL;
+    if (!IS_NUMBER(direction)) {
+        runtimeError("direction is not a number.");
+        return ERR_VAL;
+    }
+    return placeWall(AS_NUMBER(avenue), AS_NUMBER(street), AS_NUMBER(direction)) ? ERR_VAL : NIL_VAL;
 }
 
 static Value condFacingDirNative(int argCount, Value* args) {
     if (argCount != 1) {
         runtimeError("Expected 1 argument but got %d.", argCount);
-        return NIL_VAL;
+        return ERR_VAL;
     }
     Value direction = args[0];
-    return BOOL_VAL(facingDirection(direction));
+    if (!IS_NUMBER(direction)) {
+        runtimeError("direction is not a number.");
+        return ERR_VAL;
+    }
+    return BOOL_VAL(facingDirection(AS_NUMBER(direction)));
 }
 
 static Value condBlockedFacingNative(int argCount, Value* args) {
     if (argCount != 1) {
         runtimeError("Expected 1 argument but got %d.", argCount);
-        return NIL_VAL;
+        return ERR_VAL;
     }
     Value facing = args[0];
-    return BOOL_VAL(facingIsBlocked(facing));
+    if (!IS_NUMBER(facing)) {
+        runtimeError("facing is not a number.");
+        return ERR_VAL;
+    }
+    int f = AS_NUMBER(facing);
+    if (!(f == 0 || f == 1 || f == -1)) {
+        runtimeError("invalid facing.");
+        return ERR_VAL;
+    }
+    return BOOL_VAL(facingIsBlocked(f));
 }
 
 static Value condBeepersAtCornerNative(int argCount, Value* args) {
     if (argCount != 0) {
         runtimeError("Expected 0 arguments but got %d.", argCount);
-        return NIL_VAL;
+        return ERR_VAL;
     }
     return BOOL_VAL(!noBeepersAtCorner());
 }
@@ -104,7 +170,7 @@ static Value condBeepersAtCornerNative(int argCount, Value* args) {
 static Value condBeeperBagEmptyNative(int argCount, Value* args) {
     if (argCount != 0) {
         runtimeError("Expected 0 arguments but got %d.", argCount);
-        return NIL_VAL;
+        return ERR_VAL;
     }
     return BOOL_VAL(beeperBagEmpty());
 }
@@ -213,6 +279,8 @@ static bool callValue(Value callee, int argCount) {
         NativeFn native = AS_NATIVE(callee);
         Value result = native(argCount, vm.stackTop - argCount);
         vm.stackTop -= argCount + 1;
+        if (valuesEqual(result, ERR_VAL))
+            return false;
         push(result);
         return true;
       }
@@ -265,6 +333,7 @@ static InterpretResult run() {
       double a = AS_NUMBER(pop()); \
       push(valueType(a op b)); \
     } while (false)
+
   for (;;) {
 #ifdef DEBUG_TRACE_EXECUTION
     printf("          ");
@@ -387,7 +456,7 @@ static InterpretResult run() {
         break;
       }
       case OP_MOVE:
-        if (facingIsBlocked(NUMBER_VAL(0))) {
+        if (facingIsBlocked(0)) {
             runtimeError("Forbidden movement.");
             return INTERPRET_RUNTIME_ERROR;
         }
@@ -444,5 +513,8 @@ InterpretResult interpret(const char* source) {
   push(OBJ_VAL(function));
   call(function, 0);
 
-  return run();
+  printf("initscr()\n");
+  InterpretResult result = run();
+  printf("endwin();\n");
+  return result;
 }

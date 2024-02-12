@@ -1,6 +1,8 @@
 #ifndef ktr_world_h
 #define ktr_world_h
 
+#include <stdio.h>
+
 #include "common.h"
 #include "value.h"
 #include "vm.h"
@@ -33,13 +35,13 @@ extern Corner world[16][16];
 extern Robot karel;
 
 void defaultRobot(void);
-void initWorld(Value avenues, Value streets);
-void initRobot(Value avenue, Value street, Value direction, Value beepers);
-void placeHome(Value avenue, Value street);
-void placeBeepers(Value avenue, Value street, Value number);
-void placeWall(Value avenue, Value street, Value direction);
-bool facingDirection(Value direction);
-bool facingIsBlocked(Value facing);
+int initWorld(int avenues, int streets);
+int initRobot(int avenue, int street, int direction, int beepers);
+int placeHome(int avenue, int street);
+int placeBeepers(int avenue, int street, int number);
+int placeWall(int avenue, int street, int direction);
+bool facingDirection(int direction);
+bool facingIsBlocked(int facing);
 bool beeperBagEmpty(void);
 bool noBeepersAtCorner(void);
 void decrementBeeperBag(void);
