@@ -35,6 +35,7 @@ The functions `world`, `home`, `robot`, `beepers`, and `wall` have been added to
 There are some problems with native functions, e.g. how runtime errors in one break the interpreter and cause a segfault, also breaking curses. I need to propagate the error to the run function and return from that with a runtime error result. Two alternatives seem practicable:
 1. rewrite `callValue` to read the status of the function on return and return false if an RTE has occurred: this also means that the native function must push the actual result on the stack, making it a hybrid native/VM function
 2. scrap the native function method and compile functions like `world` to bytecodes to run entirely inside the VM
+3. to write the functions as Lox code seems less feasible since they must communicate with curses
 
 ## Acknowledgements
 clox belongs to Robert Nystrom. Karel the Robot was designed by Richard E. Pattis. 
