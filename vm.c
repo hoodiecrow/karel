@@ -457,19 +457,23 @@ static InterpretResult run() {
       }
       case OP_MOVE:
         if (facingIsBlocked(0)) {
+            printf("curses: movement is blocked\n");
             runtimeError("Forbidden movement.");
             return INTERPRET_RUNTIME_ERROR;
         }
         moveToNext();
+        printf("curses: move robot\n");
         break;
       case OP_LEFT:
         turnLeft();
+        printf("curses: change robot facing\n");
         break;
       case OP_QUIT:
         // compare world and robot to expected outcome
         break;
       case OP_GET:
           if (noBeepersAtCorner()) {
+            printf("curses: no beepers here\n");
             runtimeError("No beepers at current corner.");
             return INTERPRET_RUNTIME_ERROR;
           }
@@ -478,6 +482,7 @@ static InterpretResult run() {
         break;
       case OP_PUT:
           if (beeperBagEmpty()) {
+            printf("curses: no beepers in bag\n");
             runtimeError("No beepers in beeper bag.");
             return INTERPRET_RUNTIME_ERROR;
           }
