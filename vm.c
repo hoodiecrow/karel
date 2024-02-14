@@ -461,12 +461,13 @@ static InterpretResult run() {
             runtimeError("Forbidden movement.");
             return INTERPRET_RUNTIME_ERROR;
         }
+        printf("curses: "); unShowRobot();
         moveToNext();
-        printf("curses: move robot\n");
+        printf("curses: "); showRobot();
         break;
       case OP_LEFT:
         turnLeft();
-        printf("curses: change robot facing\n");
+        printf("curses: "); showRobot();
         break;
       case OP_QUIT:
         // compare world and robot to expected outcome

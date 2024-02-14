@@ -49,6 +49,8 @@ void incrementBeeperBag(void);
 void decrementBeepersAtCorner(void);
 void incrementBeepersAtCorner(void);
 void moveToNext(void);
+void unShowRobot(void);
+void showRobot(void);
 void turnLeft(void);
 
 #endif
