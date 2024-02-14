@@ -464,13 +464,16 @@ static InterpretResult run() {
         printf("curses: "); unShowRobot();
         moveToNext();
         printf("curses: "); showRobot();
+        printf("curses: getch()");
         break;
       case OP_LEFT:
         turnLeft();
         printf("curses: "); showRobot();
+        printf("curses: getch()");
         break;
       case OP_QUIT:
         // compare world and robot to expected outcome
+        printf("curses: getch()");
         break;
       case OP_GET:
           if (noBeepersAtCorner()) {
