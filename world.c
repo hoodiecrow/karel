@@ -7,6 +7,8 @@ int NUM_STREETS = 16;
 
 Corner world[16][16];
 
+Home home;
+
 Robot karel;
 
 void defaultRobot(void) {
@@ -67,12 +69,12 @@ int placeHome(int avenue, int street) {
         avenue = 1;
     if (avenue > NUM_AVENUES)
         avenue = NUM_AVENUES;
-
     if (street < 1)
         street = 1;
     if (street > NUM_STREETS)
         street = NUM_STREETS;
-    world[avenue][street].home = true;
+    home.avenue = avenue;
+    home.street = street;
     printf("curses: place home at %d,%d\n", avenue, street);
     return 0;
 }

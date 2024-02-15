@@ -10,12 +10,16 @@
 typedef struct {
   int color;
   int beepers;
-  bool home;
   bool wallEast;
   bool wallNorth;
   bool wallWest;
   bool wallSouth;
 } Corner;
+
+typedef struct {
+  int avenue;
+  int street;
+} Home;
 
 typedef struct {
   int color;
@@ -32,6 +36,7 @@ typedef struct {
  */
 
 extern Corner world[16][16];
+extern Home home;
 extern Robot karel;
 
 void defaultRobot(void);
