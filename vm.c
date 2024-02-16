@@ -479,6 +479,10 @@ static InterpretResult run() {
         break;
       case OP_QUIT:
         // compare world and robot to expected outcome
+        if (homeDefined()) {
+            // compare robot's x, y, d to home
+        }
+        // compare beepers in world to expected
         printf("curses: getch()");
         break;
       case OP_GET:

@@ -80,6 +80,10 @@ int placeHome(int avenue, int street, int direction) {
     return 0;
 }
 
+bool homeDefined(void) {
+    return home.avenue != 0 && home.street != 0;
+}
+
 int placeBeepers(int avenue, int street, int number) {
     if (avenue < 1)
         avenue = 1;

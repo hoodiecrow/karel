@@ -44,6 +44,7 @@ void defaultRobot(void);
 int initWorld(int avenues, int streets);
 int initRobot(int avenue, int street, int direction, int beepers);
 int placeHome(int avenue, int street, int direction);
+bool homeDefined(void);
 int placeBeepers(int avenue, int street, int number);
 int placeWall(int avenue, int street, int direction);
 bool facingDirection(int direction);
