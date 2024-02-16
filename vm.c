@@ -64,8 +64,8 @@ static Value robotNative(int argCount, Value* args) {
 }
 
 static Value homeNative(int argCount, Value* args) {
-    if (argCount != 2) {
-        runtimeError("Expected 2 arguments but got %d.", argCount);
+    if (argCount != 3) {
+        runtimeError("Expected 3 arguments but got %d.", argCount);
         return ERR_VAL;
     }
     Value avenue = args[0];
@@ -78,7 +78,13 @@ static Value homeNative(int argCount, Value* args) {
         runtimeError("street is not a number.");
         return ERR_VAL;
     }
-    return placeHome(AS_NUMBER(avenue), AS_NUMBER(street)) ? ERR_VAL : NIL_VAL;
+    Value direction = args[2];
+    if (!IS_NUMBER(direction)) {
+        runtimeError("direction is not a number.");
+        return ERR_VAL;
+    }
+    return placeHome(AS_NUMBER(avenue), AS_NUMBER(street),
+            AS_NUMBER(direction)) ? ERR_VAL : NIL_VAL;
 }
 
 static Value beepersNative(int argCount, Value* args) {

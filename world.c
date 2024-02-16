@@ -64,7 +64,7 @@ int initRobot(int avenue, int street, int direction, int beepers) {
     return 0;
 }
 
-int placeHome(int avenue, int street) {
+int placeHome(int avenue, int street, int direction) {
     if (avenue < 1)
         avenue = 1;
     if (avenue > NUM_AVENUES)
@@ -75,7 +75,8 @@ int placeHome(int avenue, int street) {
         street = NUM_STREETS;
     home.avenue = avenue;
     home.street = street;
-    printf("curses: place home at %d,%d\n", avenue, street);
+    home.direction = direction;
+    printf("curses: place home at %d,%d, facing %d\n", avenue, street, direction);
     return 0;
 }
 

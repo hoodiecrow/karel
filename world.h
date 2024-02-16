@@ -19,6 +19,7 @@ typedef struct {
 typedef struct {
   int avenue;
   int street;
+  int direction;
 } Home;
 
 typedef struct {
@@ -42,7 +43,7 @@ extern Robot karel;
 void defaultRobot(void);
 int initWorld(int avenues, int streets);
 int initRobot(int avenue, int street, int direction, int beepers);
-int placeHome(int avenue, int street);
+int placeHome(int avenue, int street, int direction);
 int placeBeepers(int avenue, int street, int number);
 int placeWall(int avenue, int street, int direction);
 bool facingDirection(int direction);
