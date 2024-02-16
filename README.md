@@ -20,7 +20,7 @@ The arena or world karel moves in will be displayed as ncurses character graphic
 ### Initialization
 The functions `world`, `home`, `robot`, `beepers`, and `wall` have been added to initialize the world parts. They are defined using the native function interface (such as it is).
 - `world(x, y)` sets the size of the world to _x_ avenues and _y_ streets; neither can exceed 16
-- `home(x, y)` sets the location where the robot is supposed to end up to _x_ avenue, _y_ street (if not set, the robot can shut down anywhere)
+- `home(x, y, d)` sets the location and direction the robot is supposed to end up in to _x_ avenue, _y_ street, and _d_ direction (if not set, the robot can shut down anywhere)
 - `robot(x, y, d, n)` sets the robot at _x_ avenue, _y_ street, facing direction _d_ (`EAST` (0), `NORTH` (1), `WEST` (2), or `SOUTH` (3)), and carrying _n_ beepers
 - `beepers(x, y, n)` sets down _n_ beepers at _x_ avenue, _y_ street
 - `wall(x, y, d)` sets down a wall near _x_ avenue, _y_ street, blocking the way in direction _d_ (and also from the opposite direction)
