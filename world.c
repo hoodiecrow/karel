@@ -19,6 +19,27 @@ void defaultRobot(void) {
     karel.street = 1;
 }
 
+/*
+ *    y:
+ * LINES-5 X2|XXX
+ * LINES-4 XXXXXX
+ * LINES-3 X1|>XX
+ * LINES-2 XXX_X_
+ * LINES-1   X1X2
+ * LINES     XXXX
+ *       x:123456
+ * Karel at 1;1: karely()=LINES-3 / karelx()=4
+ * X = space
+ */
+
+int actualy(int y) {
+    return LINES-(2+(2*y));
+}
+
+int actualx(int x) {
+    return 2+(2*x);
+}
+
 int initWorld(int avenues, int streets) {
     NUM_AVENUES = avenues;
     if (NUM_AVENUES > 16)
@@ -29,6 +50,7 @@ int initWorld(int avenues, int streets) {
     printf("curses: draw corners and labels\n");
     for (int a = 1; a <= NUM_AVENUES; a++) {
         for (int s = 1; s <= NUM_STREETS; s++) {
+            mvaddch(actualy(s), actualx(a), '+');
             world[a][s].color = 0;
             world[a][s].beepers = 0;
             if (a == 1)
@@ -60,7 +82,8 @@ int initRobot(int avenue, int street, int direction, int beepers) {
     karel.direction = direction % 4;
 
     karel.beepers = beepers;
-    printf("curses: place robot at %d,%d, direction %d\n", avenue, street, direction);
+    showRobot();
+    getch();
     return 0;
 }
 
@@ -174,27 +197,6 @@ void moveToNext(void) {
   }
 }
 
-/*
- *    y:
- * LINES-5 X2|XXX
- * LINES-4 XXXXXX
- * LINES-3 X1|>XX
- * LINES-2 XXX_X_
- * LINES-1   X1X2
- * LINES     XXXX
- *       x:123456
- * Karel at 1;1: karely()=LINES-3 / karelx()=4
- * X = space
- */
-
-int actualy(int y) {
-    return LINES-1-(2*y);
-}
-
-int actualx(int x) {
-    return 2+(2*x);
-}
-
 int karely(void) {
     return actualy(karel.street);
 }
@@ -205,27 +207,27 @@ int karelx(void) {
 
 void showRobot(void) {
     switch (karel.direction) {
-        case 0: printf("mvaddch(karely(), karelx(), '>')\n"); break;
-        case 1: printf("mvaddch(karely(), karelx(), '^')\n"); break;
-        case 2: printf("mvaddch(karely(), karelx(), '<')\n"); break;
-        case 3: printf("mvaddch(karely(), karelx(), 'v')\n"); break;
+        case 0: mvaddch(karely(), karelx(), '>'); break;
+        case 1: mvaddch(karely(), karelx(), '^'); break;
+        case 2: mvaddch(karely(), karelx(), '<'); break;
+        case 3: mvaddch(karely(), karelx(), 'v'); break;
         default: return;
     }
 }
 
 void unShowRobot(void) {
     switch (world[karel.avenue][karel.street].beepers) {
-        case 0: printf("mvaddch(karely(), karelx(), '+')\n"); break;
-        case 1: printf("mvaddch(karely(), karelx(), '1')\n"); break;
-        case 2: printf("mvaddch(karely(), karelx(), '2')\n"); break;
-        case 3: printf("mvaddch(karely(), karelx(), '3')\n"); break;
-        case 4: printf("mvaddch(karely(), karelx(), '4')\n"); break;
-        case 5: printf("mvaddch(karely(), karelx(), '5')\n"); break;
-        case 6: printf("mvaddch(karely(), karelx(), '6')\n"); break;
-        case 7: printf("mvaddch(karely(), karelx(), '7')\n"); break;
-        case 8: printf("mvaddch(karely(), karelx(), '8')\n"); break;
-        case 9: printf("mvaddch(karely(), karelx(), '9')\n"); break;
-        default: printf("mvaddch(karely(), karelx(), '*')\n"); break;
+        case 0: mvaddch(karely(), karelx(), '+'); break;
+        case 1: mvaddch(karely(), karelx(), '1'); break;
+        case 2: mvaddch(karely(), karelx(), '2'); break;
+        case 3: mvaddch(karely(), karelx(), '3'); break;
+        case 4: mvaddch(karely(), karelx(), '4'); break;
+        case 5: mvaddch(karely(), karelx(), '5'); break;
+        case 6: mvaddch(karely(), karelx(), '6'); break;
+        case 7: mvaddch(karely(), karelx(), '7'); break;
+        case 8: mvaddch(karely(), karelx(), '8'); break;
+        case 9: mvaddch(karely(), karelx(), '9'); break;
+        default: mvaddch(karely(), karelx(), '*'); break;
     }
 }
 

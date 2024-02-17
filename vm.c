@@ -467,23 +467,30 @@ static InterpretResult run() {
             runtimeError("Forbidden movement.");
             return INTERPRET_RUNTIME_ERROR;
         }
-        printf("curses: "); unShowRobot();
+        unShowRobot();
         moveToNext();
-        printf("curses: "); showRobot();
-        printf("curses: getch()");
+        showRobot();
+        getch();
         break;
       case OP_LEFT:
         turnLeft();
-        printf("curses: "); showRobot();
-        printf("curses: getch()");
+        showRobot();
+        getch();
         break;
-      case OP_QUIT:
+      case OP_QUIT: {
         // compare world and robot to expected outcome
+        bool homeIsOk = false;
         if (homeDefined()) {
             // compare robot's x, y, d to home
+            homeIsOk = (home.avenue == karel.avenue &&
+                home.street == karel.street &&
+                home.direction == karel.direction);
+        } else {
+            homeIsOk = true;
         }
         // compare beepers in world to expected
         printf("curses: getch()");
+        }
         break;
       case OP_GET:
           if (noBeepersAtCorner()) {
@@ -532,8 +539,8 @@ InterpretResult interpret(const char* source) {
   push(OBJ_VAL(function));
   call(function, 0);
 
-  printf("initscr()\n");
+  initscr();
   InterpretResult result = run();
-  printf("endwin();\n");
+  endwin();
   return result;
 }
