@@ -98,8 +98,15 @@ int placeHome(int avenue, int street, int direction) {
         street = NUM_STREETS;
     home.avenue = avenue;
     home.street = street;
+    move(actualy(street), actualx(avenue));
     home.direction = direction;
-    printf("curses: place home at %d,%d, facing %d\n", avenue, street, direction);
+    switch (direction) {
+        case 0: addch(A_REVERSE | '>'); break;
+        case 1: addch(A_REVERSE | '^'); break;
+        case 2: addch(A_REVERSE | '<'); break;
+        case 3: addch(A_REVERSE | 'v'); break;
+        default: return 1;
+    }
     return 0;
 }
 
