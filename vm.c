@@ -470,6 +470,7 @@ static InterpretResult run() {
         unShowRobot();
         moveToNext();
         showRobot();
+        // refresh() ?
         getch();
         break;
       case OP_LEFT:
@@ -477,7 +478,7 @@ static InterpretResult run() {
         showRobot();
         getch();
         break;
-      case OP_QUIT: {
+      case OP_DONE: {
         // compare world and robot to expected outcome
         bool homeIsOk = false;
         if (homeDefined()) {
@@ -489,7 +490,7 @@ static InterpretResult run() {
             homeIsOk = true;
         }
         // compare beepers in world to expected
-        printf("curses: getch()");
+        getch();
         }
         break;
       case OP_GET:
@@ -540,6 +541,7 @@ InterpretResult interpret(const char* source) {
   call(function, 0);
 
   initscr();
+  noecho();
   InterpretResult result = run();
   endwin();
   return result;

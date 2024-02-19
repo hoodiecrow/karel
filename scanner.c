@@ -119,6 +119,7 @@ static TokenType identifierType() {
     case 'W': return checkKeyword(1, 3, "EST", TOKEN_C_WEST);
     case 'a': return checkKeyword(1, 2, "nd", TOKEN_AND);
     case 'c': return checkKeyword(1, 4, "lass", TOKEN_CLASS);
+    case 'd': return checkKeyword(1, 3, "one", TOKEN_DONE);
     case 'e': return checkKeyword(1, 3, "lse", TOKEN_ELSE);
     case 'f':
       if (scanner.current - scanner.start > 1) {
@@ -143,7 +144,6 @@ static TokenType identifierType() {
         }
       }
       break;
-    case 'q': return checkKeyword(1, 3, "uit", TOKEN_QUIT);
     case 'r':
       if (scanner.current - scanner.start > 1) {
         switch (scanner.start[1]) {

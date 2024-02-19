@@ -27,7 +27,7 @@ typedef enum {
   OP_PRINT,
   OP_MOVE,
   OP_LEFT,
-  OP_QUIT,
+  OP_DONE,
   OP_GET,
   OP_PUT,
   OP_JUMP,

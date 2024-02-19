@@ -733,7 +733,7 @@ static void getStatement();
 static void leftStatement();
 static void moveStatement();
 static void putStatement();
-static void quitStatement();
+static void doneStatement();
 
 static void statement() {
   if (match(TOKEN_PRINT)) {
@@ -750,8 +750,8 @@ static void statement() {
     moveStatement();
   } else if (match(TOKEN_PUT)) {
     putStatement();
-  } else if (match(TOKEN_QUIT)) {
-    quitStatement();
+  } else if (match(TOKEN_DONE)) {
+    doneStatement();
   } else if (match(TOKEN_REPEAT)) {
     repeatStatement();
   } else if (match(TOKEN_RETURN)) {
@@ -853,9 +853,9 @@ static void putStatement() {
   emitByte(OP_PUT);
 }
 
-static void quitStatement() {
+static void doneStatement() {
   consume(TOKEN_SEMICOLON, "Expect ';' after 'quit'.");
-  emitByte(OP_QUIT);
+  emitByte(OP_DONE);
 }
 
 

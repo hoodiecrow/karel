@@ -19,25 +19,12 @@ void defaultRobot(void) {
     karel.street = 1;
 }
 
-/*
- *    y:
- * LINES-5 X2|XXX
- * LINES-4 XXXXXX
- * LINES-3 X1|>XX
- * LINES-2 XXX_X_
- * LINES-1   X1X2
- * LINES     XXXX
- *       x:123456
- * Karel at 1;1: karely()=LINES-3 / karelx()=4
- * X = space
- */
-
 int actualy(int y) {
     return LINES-(2+(2*y));
 }
 
 int actualx(int x) {
-    return 2+(2*x);
+    return 2+(4*x);
 }
 
 int initWorld(int avenues, int streets) {
@@ -47,7 +34,6 @@ int initWorld(int avenues, int streets) {
     NUM_STREETS = streets;
     if (NUM_STREETS > 16)
         NUM_STREETS = 16;
-    printf("curses: draw corners and labels\n");
     for (int a = 1; a <= NUM_AVENUES; a++) {
         for (int s = 1; s <= NUM_STREETS; s++) {
             mvaddch(actualy(s), actualx(a), '+');
@@ -62,6 +48,12 @@ int initWorld(int avenues, int streets) {
             else if (s == NUM_STREETS)
                 world[a][s].wallNorth = true;
         }
+    }
+    for (int a = 1; a <= NUM_AVENUES; a++) {
+        mvprintw(actualy(0), actualx(a)-1, "%2d", a);
+    }
+    for (int s = 1; s <= NUM_STREETS; s++) {
+        mvprintw(actualy(s), actualx(0)-1, "%2d", s);
     }
     return 0;
 }
@@ -107,12 +99,15 @@ int placeHome(int avenue, int street, int direction) {
         case 3: addch(A_REVERSE | 'v'); break;
         default: return 1;
     }
+    refresh();
     return 0;
 }
 
 bool homeDefined(void) {
     return home.avenue != 0 && home.street != 0;
 }
+
+void showCorner(int avenue, int street);
 
 int placeBeepers(int avenue, int street, int number) {
     if (avenue < 1)
@@ -124,7 +119,9 @@ int placeBeepers(int avenue, int street, int number) {
     if (street > NUM_STREETS)
         street = NUM_STREETS;
     world[avenue][street].beepers = number;
-    printf("curses: place %d beepers at %d,%d\n", number, avenue, street);
+//    printf("curses: place %d beepers at %d,%d\n", number, avenue, street);
+    showCorner(avenue, street);
+    refresh();
     return 0;
 }
 
@@ -220,22 +217,27 @@ void showRobot(void) {
         case 3: mvaddch(karely(), karelx(), 'v'); break;
         default: return;
     }
+    refresh();
+}
+
+void showCorner(int avenue, int street) {
+    switch (world[avenue][street].beepers) {
+        case 0: mvaddch(actualy(street), actualx(avenue), '+'); break;
+        case 1: mvaddch(actualy(street), actualx(avenue), '1'); break;
+        case 2: mvaddch(actualy(street), actualx(avenue), '2'); break;
+        case 3: mvaddch(actualy(street), actualx(avenue), '3'); break;
+        case 4: mvaddch(actualy(street), actualx(avenue), '4'); break;
+        case 5: mvaddch(actualy(street), actualx(avenue), '5'); break;
+        case 6: mvaddch(actualy(street), actualx(avenue), '6'); break;
+        case 7: mvaddch(actualy(street), actualx(avenue), '7'); break;
+        case 8: mvaddch(actualy(street), actualx(avenue), '8'); break;
+        case 9: mvaddch(actualy(street), actualx(avenue), '9'); break;
+        default: mvaddch(actualy(street), actualx(avenue), '*'); break;
+    }
 }
 
 void unShowRobot(void) {
-    switch (world[karel.avenue][karel.street].beepers) {
-        case 0: mvaddch(karely(), karelx(), '+'); break;
-        case 1: mvaddch(karely(), karelx(), '1'); break;
-        case 2: mvaddch(karely(), karelx(), '2'); break;
-        case 3: mvaddch(karely(), karelx(), '3'); break;
-        case 4: mvaddch(karely(), karelx(), '4'); break;
-        case 5: mvaddch(karely(), karelx(), '5'); break;
-        case 6: mvaddch(karely(), karelx(), '6'); break;
-        case 7: mvaddch(karely(), karelx(), '7'); break;
-        case 8: mvaddch(karely(), karelx(), '8'); break;
-        case 9: mvaddch(karely(), karelx(), '9'); break;
-        default: mvaddch(karely(), karelx(), '*'); break;
-    }
+    showCorner(karel.avenue, karel.street);
 }
 
 void turnLeft(void) {
