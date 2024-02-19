@@ -20,11 +20,11 @@ void defaultRobot(void) {
 }
 
 int actualy(int y) {
-    return LINES-(2+(2*y));
+    return LINES-(2+(3*y));
 }
 
 int actualx(int x) {
-    return 2+(4*x);
+    return 2+(5*x);
 }
 
 int initWorld(int avenues, int streets) {
@@ -125,6 +125,31 @@ int placeBeepers(int avenue, int street, int number) {
     return 0;
 }
 
+void showWall(int avenue, int street, int direction) {
+    int x = actualx(avenue);
+    int y = actualy(street);
+    if (direction == 0) {
+        x += 3;
+        for (int y_ = y - 1; y_ <= y + 1; y_++) {
+            mvaddch(y_, x, '|');
+        }
+    } else if (direction == 1) {
+        y -= 2;
+        x -= 1;
+        mvaddstr(y, x, "---");
+    } else if (direction == 2) {
+        x -= 3;
+        for (int y_ = y - 1; y_ <= y + 1; y_++) {
+            mvaddch(y_, x, '|');
+        }
+    } else if (direction == 3) {
+        y += 2;
+        x -= 1;
+        mvaddstr(y, x, "---");
+    }
+    refresh();
+}
+
 int placeWall(int avenue, int street, int direction) {
     if (avenue < 1)
         avenue = 1;
@@ -156,7 +181,8 @@ int placeWall(int avenue, int street, int direction) {
         world[avenue][street].wallSouth = true;
         world[avenue][street - 1].wallNorth = true;
     }
-    printf("curses: place wall at %d,%d, direction %d\n", avenue, street, direction);
+    showWall(avenue, street, direction);
+
     return 0;
 }
 
