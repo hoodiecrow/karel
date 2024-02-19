@@ -13,7 +13,7 @@ I intend to add seven statement types to clox to make controlling the robot poss
 - `get` -- remove a beeper from the corner (done)
 - `color(n)` -- color the corner with color #_n_
 - `repeat(n) statement` -- repeat a (possibly compound) statement _n_ times (done)
-- `quit` -- shut down the robot
+- `done` -- shut down the robot
 
 The arena or world karel moves in will be displayed as ncurses character graphics.
 
