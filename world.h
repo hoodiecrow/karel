@@ -36,7 +36,7 @@ typedef struct {
  * 0 beepers: +; n beepers (1-9): n; n beepers (10+): *
  */
 
-extern Corner world[16][16];
+extern Corner world[11][11];
 extern Home home;
 extern Robot karel;
 

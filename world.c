@@ -2,10 +2,10 @@
 #include "world.h"
 
 // most worlds will be smaller in practice
-int NUM_AVENUES = 16;
-int NUM_STREETS = 16;
+int NUM_AVENUES = 11;
+int NUM_STREETS = 11;
 
-Corner world[16][16];
+Corner world[11][11];
 
 Home home;
 
@@ -20,34 +20,44 @@ void defaultRobot(void) {
 }
 
 int actualy(int y) {
-    return LINES-(2+(3*y));
+    return LINES-(2+(4*y));
 }
 
 int actualx(int x) {
-    return 2+(5*x);
+    return 2+(6*x);
 }
+
+void showWall(int avenue, int street, int direction);
 
 int initWorld(int avenues, int streets) {
     NUM_AVENUES = avenues;
-    if (NUM_AVENUES > 16)
-        NUM_AVENUES = 16;
+    if (NUM_AVENUES > 11)
+        NUM_AVENUES = 11;
     NUM_STREETS = streets;
-    if (NUM_STREETS > 16)
-        NUM_STREETS = 16;
+    if (NUM_STREETS > 11)
+        NUM_STREETS = 11;
     for (int a = 1; a <= NUM_AVENUES; a++) {
         for (int s = 1; s <= NUM_STREETS; s++) {
             mvaddch(actualy(s), actualx(a), '+');
             world[a][s].color = 0;
             world[a][s].beepers = 0;
-            if (a == 1)
-                world[a][s].wallWest = true;
-            else if (a == NUM_AVENUES)
-                world[a][s].wallEast = true;
-            else if (s == 1)
-                world[a][s].wallSouth = true;
-            else if (s == NUM_STREETS)
-                world[a][s].wallNorth = true;
         }
+    }
+    for (int a = 1, s = 1; s <= NUM_STREETS; s++) {
+        world[a][s].wallWest = true;
+        showWall(a, s, 2);
+    }
+    for (int a = NUM_AVENUES, s = 1; s <= NUM_STREETS; s++) {
+        world[a][s].wallEast = true;
+        showWall(a, s, 0);
+    }
+    for (int a = 1, s = 1; a <= NUM_AVENUES; a++) {
+        world[a][s].wallSouth = true;
+        showWall(a, s, 3);
+    }
+    for (int a = 1, s = NUM_STREETS; a <= NUM_AVENUES; a++) {
+        world[a][s].wallNorth = true;
+        showWall(a, s, 1);
     }
     for (int a = 1; a <= NUM_AVENUES; a++) {
         mvprintw(actualy(0), actualx(a)-1, "%2d", a);
