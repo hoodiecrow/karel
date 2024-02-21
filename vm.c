@@ -467,7 +467,7 @@ static InterpretResult run() {
             runtimeError("Forbidden movement.");
             return INTERPRET_RUNTIME_ERROR;
         }
-        unShowRobot();
+        showCorner(karel.avenue, karel.street);
         moveToNext();
         showRobot();
         // refresh() ?

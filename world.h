@@ -56,7 +56,7 @@ void incrementBeeperBag(void);
 void decrementBeepersAtCorner(void);
 void incrementBeepersAtCorner(void);
 void moveToNext(void);
-void unShowRobot(void);
+void showCorner(int avenue, int street);
 void showRobot(void);
 void turnLeft(void);
 

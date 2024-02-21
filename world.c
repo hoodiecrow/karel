@@ -117,8 +117,6 @@ bool homeDefined(void) {
     return home.avenue != 0 && home.street != 0;
 }
 
-void showCorner(int avenue, int street);
-
 int placeBeepers(int avenue, int street, int number) {
     if (avenue < 1)
         avenue = 1;
@@ -270,10 +268,6 @@ void showCorner(int avenue, int street) {
         case 9: mvaddch(actualy(street), actualx(avenue), '9'); break;
         default: mvaddch(actualy(street), actualx(avenue), '*'); break;
     }
-}
-
-void unShowRobot(void) {
-    showCorner(karel.avenue, karel.street);
 }
 
 void turnLeft(void) {
