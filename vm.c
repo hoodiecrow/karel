@@ -316,6 +316,15 @@ static void concatenate() {
   push(OBJ_VAL(result));
 }
 
+void markFirstMove(void) {
+  mvaddstr(0, 0, "Press any key to start");
+  clrtoeol();
+  refresh();
+  getch();
+  mvaddstr(0, 0, "");
+  clrtoeol();
+}
+
 static InterpretResult run() {
   CallFrame* frame = &vm.frames[vm.frameCount - 1];
 
@@ -340,6 +349,7 @@ static InterpretResult run() {
       push(valueType(a op b)); \
     } while (false)
 
+  bool firstMove = true;
   for (;;) {
 #ifdef DEBUG_TRACE_EXECUTION
     printf("          ");
@@ -462,6 +472,8 @@ static InterpretResult run() {
         break;
       }
       case OP_MOVE:
+        if (firstMove) markFirstMove();
+        firstMove = false;
         if (facingIsBlocked(0)) {
             printf("curses: movement is blocked\n");
             runtimeError("Forbidden movement.");
@@ -474,6 +486,8 @@ static InterpretResult run() {
         getch();
         break;
       case OP_LEFT:
+        if (firstMove) markFirstMove();
+        firstMove = false;
         turnLeft();
         showRobot();
         getch();
@@ -494,8 +508,13 @@ static InterpretResult run() {
         }
         break;
       case OP_GET:
+        if (firstMove) markFirstMove();
+        firstMove = false;
           if (noBeepersAtCorner()) {
-            printf("curses: no beepers here\n");
+            mvaddstr(0, 0, "No beepers here");
+            clrtoeol();
+            refresh();
+            getch();
             runtimeError("No beepers at current corner.");
             return INTERPRET_RUNTIME_ERROR;
           }
@@ -503,9 +522,16 @@ static InterpretResult run() {
           incrementBeeperBag();
         break;
       case OP_PUT:
+        if (firstMove) markFirstMove();
+        firstMove = false;
           if (beeperBagEmpty()) {
             printf("curses: no beepers in bag\n");
             runtimeError("No beepers in beeper bag.");
+            return INTERPRET_RUNTIME_ERROR;
+          }
+          if (world[karel.avenue][karel.street].beepers == 99) {
+            printf("curses: too many beepers in corner\n");
+            runtimeError("Too many beepers in corner.");
             return INTERPRET_RUNTIME_ERROR;
           }
           decrementBeeperBag();

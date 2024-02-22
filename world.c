@@ -85,7 +85,6 @@ int initRobot(int avenue, int street, int direction, int beepers) {
 
     karel.beepers = beepers;
     showRobot();
-    getch();
     return 0;
 }
 
@@ -255,18 +254,10 @@ void showRobot(void) {
 }
 
 void showCorner(int avenue, int street) {
-    switch (world[avenue][street].beepers) {
-        case 0: mvaddch(actualy(street), actualx(avenue), '+'); break;
-        case 1: mvaddch(actualy(street), actualx(avenue), '1'); break;
-        case 2: mvaddch(actualy(street), actualx(avenue), '2'); break;
-        case 3: mvaddch(actualy(street), actualx(avenue), '3'); break;
-        case 4: mvaddch(actualy(street), actualx(avenue), '4'); break;
-        case 5: mvaddch(actualy(street), actualx(avenue), '5'); break;
-        case 6: mvaddch(actualy(street), actualx(avenue), '6'); break;
-        case 7: mvaddch(actualy(street), actualx(avenue), '7'); break;
-        case 8: mvaddch(actualy(street), actualx(avenue), '8'); break;
-        case 9: mvaddch(actualy(street), actualx(avenue), '9'); break;
-        default: mvaddch(actualy(street), actualx(avenue), '*'); break;
+    if (world[avenue][street].beepers == 0) {
+        mvaddch(actualy(street), actualx(avenue), '+');
+    } else {
+        mvprintw(actualy(street), actualx(avenue)-1, "%2d", world[avenue][street].beepers);
     }
 }
 
