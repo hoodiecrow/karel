@@ -81,7 +81,7 @@ int initRobot(int avenue, int street, int direction, int beepers) {
     if (karel.street > NUM_STREETS)
         karel.street = NUM_STREETS;
 
-    karel.direction = direction % 4;
+    karel.direction = abs(direction) % 4;
 
     karel.beepers = beepers;
     showRobot();
@@ -166,7 +166,7 @@ int placeWall(int avenue, int street, int direction) {
         street = 1;
     if (street > NUM_STREETS)
         street = NUM_STREETS;
-    direction = direction % 4;
+    direction = abs(direction) % 4;
     // don't place a piece of wall at the border
     if ((direction == 0 && avenue == NUM_AVENUES) || 
         (direction == 1 && street == NUM_STREETS) || 
@@ -266,7 +266,7 @@ void turnLeft(void) {
 }
 
 bool facingDirection(int direction) {
-    return direction % 4 == karel.direction;
+    return abs(direction) % 4 == karel.direction;
 }
 
 bool facingIsBlocked(int facing) {

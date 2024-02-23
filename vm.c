@@ -472,8 +472,10 @@ static InterpretResult run() {
         break;
       }
       case OP_MOVE:
-        if (firstMove) markFirstMove();
-        firstMove = false;
+        if (firstMove) {
+            markFirstMove();
+            firstMove = false;
+        }
         if (facingIsBlocked(0)) {
             printf("curses: movement is blocked\n");
             runtimeError("Forbidden movement.");
@@ -483,14 +485,16 @@ static InterpretResult run() {
         moveToNext();
         showRobot();
         // refresh() ?
-        getch();
+        napms(900);
         break;
       case OP_LEFT:
-        if (firstMove) markFirstMove();
-        firstMove = false;
+        if (firstMove) {
+            markFirstMove();
+            firstMove = false;
+        }
         turnLeft();
         showRobot();
-        getch();
+        napms(900);
         break;
       case OP_DONE: {
         // compare world and robot to expected outcome
@@ -504,12 +508,17 @@ static InterpretResult run() {
             homeIsOk = true;
         }
         // compare beepers in world to expected
+        mvaddstr(0, 0, "Done--press any key to exit");
+        clrtoeol();
+        refresh();
         getch();
         }
         break;
       case OP_GET:
-        if (firstMove) markFirstMove();
-        firstMove = false;
+        if (firstMove) {
+            markFirstMove();
+            firstMove = false;
+        }
           if (noBeepersAtCorner()) {
             mvaddstr(0, 0, "No beepers here");
             clrtoeol();
@@ -522,8 +531,10 @@ static InterpretResult run() {
           incrementBeeperBag();
         break;
       case OP_PUT:
-        if (firstMove) markFirstMove();
-        firstMove = false;
+        if (firstMove) {
+            markFirstMove();
+            firstMove = false;
+        }
           if (beeperBagEmpty()) {
             printf("curses: no beepers in bag\n");
             runtimeError("No beepers in beeper bag.");
