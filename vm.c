@@ -325,6 +325,13 @@ void markFirstMove(void) {
   clrtoeol();
 }
 
+void showError(const char *msg) {
+    mvprintw(0, 0, "Error--%s", msg);
+    clrtoeol();
+    refresh();
+    getch();
+}
+
 static InterpretResult run() {
   CallFrame* frame = &vm.frames[vm.frameCount - 1];
 
@@ -507,8 +514,10 @@ static InterpretResult run() {
         } else {
             homeIsOk = true;
         }
+        bool beepsIsOk = false;
         // compare beepers in world to expected
-        mvaddstr(0, 0, "Done--press any key to exit");
+        mvprintw(0, 0, "%s--press any key to exit", (homeIsOk && beepsIsOk) ?
+                "Success" : "Failure");
         clrtoeol();
         refresh();
         getch();
@@ -520,10 +529,7 @@ static InterpretResult run() {
             firstMove = false;
         }
           if (noBeepersAtCorner()) {
-            mvaddstr(0, 0, "No beepers here");
-            clrtoeol();
-            refresh();
-            getch();
+            showError("no beepers here");
             runtimeError("No beepers at current corner.");
             return INTERPRET_RUNTIME_ERROR;
           }
