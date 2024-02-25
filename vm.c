@@ -542,12 +542,12 @@ static InterpretResult run() {
             firstMove = false;
         }
           if (beeperBagEmpty()) {
-            printf("curses: no beepers in bag\n");
+            showError("no beepers in bag\n");
             runtimeError("No beepers in beeper bag.");
             return INTERPRET_RUNTIME_ERROR;
           }
           if (world[karel.avenue][karel.street].beepers == 99) {
-            printf("curses: too many beepers in corner\n");
+            showError("too many beepers in corner\n");
             runtimeError("Too many beepers in corner.");
             return INTERPRET_RUNTIME_ERROR;
           }
