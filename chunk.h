@@ -27,6 +27,7 @@ typedef enum {
   OP_PRINT,
   OP_MOVE,
   OP_LEFT,
+  OP_COLOR,
   OP_DONE,
   OP_GET,
   OP_PUT,

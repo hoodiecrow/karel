@@ -118,7 +118,14 @@ static TokenType identifierType() {
     case 'S': return checkKeyword(1, 4, "OUTH", TOKEN_C_SOUTH);
     case 'W': return checkKeyword(1, 3, "EST", TOKEN_C_WEST);
     case 'a': return checkKeyword(1, 2, "nd", TOKEN_AND);
-    case 'c': return checkKeyword(1, 4, "lass", TOKEN_CLASS);
+    case 'c':
+      if (scanner.current - scanner.start > 1) {
+        switch (scanner.start[1]) {
+          case 'l': return checkKeyword(2, 3, "ass", TOKEN_CLASS);
+          case 'o': return checkKeyword(2, 3, "lor", TOKEN_COLOR);
+        }
+      }
+      break;
     case 'd': return checkKeyword(1, 3, "one", TOKEN_DONE);
     case 'e': return checkKeyword(1, 3, "lse", TOKEN_ELSE);
     case 'f':

@@ -729,6 +729,7 @@ static void declaration() {
 }
 
 static void repeatStatement();
+static void colorStatement();
 static void getStatement();
 static void leftStatement();
 static void moveStatement();
@@ -740,6 +741,8 @@ static void statement() {
     printStatement();
   } else if (match(TOKEN_FOR)) {
     forStatement();
+  } else if (match(TOKEN_COLOR)) {
+    colorStatement();
   } else if (match(TOKEN_GET)) {
     getStatement();
   } else if (match(TOKEN_IF)) {
@@ -851,6 +854,15 @@ static void moveStatement() {
 static void putStatement() {
   consume(TOKEN_SEMICOLON, "Expect ';' after 'put'.");
   emitByte(OP_PUT);
+}
+
+static void colorStatement() {
+  consume(TOKEN_LEFT_PAREN, "Expect '(' after 'color'.");
+
+  expression();
+  consume(TOKEN_RIGHT_PAREN, "Expect ')' after color constant.");
+  consume(TOKEN_SEMICOLON, "Expect ';' after parenthesis.");
+  emitByte(OP_COLOR);
 }
 
 static void doneStatement() {

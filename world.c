@@ -65,6 +65,10 @@ int initWorld(int avenues, int streets) {
     for (int s = 1; s <= NUM_STREETS; s++) {
         mvprintw(actualy(s), actualx(0)-1, "%2d", s);
     }
+    start_color();
+    init_pair(1, COLOR_WHITE, COLOR_RED);
+    init_pair(2, COLOR_WHITE, COLOR_GREEN);
+    init_pair(3, COLOR_WHITE, COLOR_BLUE);
     return 0;
 }
 
@@ -232,6 +236,7 @@ void moveToNext(void) {
         karel.street--;
         break;
   }
+  world[karel.avenue][karel.street].color = karel.color;
 }
 
 int karely(void) {
@@ -254,11 +259,15 @@ void showRobot(void) {
 }
 
 void showCorner(int avenue, int street) {
+    if (world[avenue][street].color != 0) {
+        attrset(COLOR_PAIR(world[avenue][street].color));
+    }
     if (world[avenue][street].beepers == 0) {
         mvaddch(actualy(street), actualx(avenue), '+');
     } else {
         mvprintw(actualy(street), actualx(avenue)-1, "%2d", world[avenue][street].beepers);
     }
+    attrset(A_NORMAL);
 }
 
 void turnLeft(void) {

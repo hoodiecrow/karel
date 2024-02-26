@@ -484,7 +484,7 @@ static InterpretResult run() {
             firstMove = false;
         }
         if (facingIsBlocked(0)) {
-            printf("curses: movement is blocked\n");
+            showError("movement is blocked\n");
             runtimeError("Forbidden movement.");
             return INTERPRET_RUNTIME_ERROR;
         }
@@ -503,6 +503,17 @@ static InterpretResult run() {
         showRobot();
         napms(900);
         break;
+      case OP_COLOR: {
+          Value v = pop();
+          if (!IS_NUMBER(v)) {
+              showError("color must be a number");
+            runtimeError("Data error.");
+            return INTERPRET_RUNTIME_ERROR;
+          }
+          karel.color = AS_NUMBER(v);
+          world[karel.avenue][karel.street].color = karel.color;
+        }
+        break;
       case OP_DONE: {
         // compare world and robot to expected outcome
         bool homeIsOk = false;
@@ -515,7 +526,7 @@ static InterpretResult run() {
             homeIsOk = true;
         }
         bool beepsIsOk = false;
-        // compare beepers in world to expected
+        // compare colors and beepers in world to expected
         mvprintw(0, 0, "%s--press any key to exit", (homeIsOk && beepsIsOk) ?
                 "Success" : "Failure");
         clrtoeol();
