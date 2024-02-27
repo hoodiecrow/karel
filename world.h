@@ -41,6 +41,7 @@ extern Corner world[11][11];
 extern Home home;
 extern Robot karel;
 
+void setColor(int color);
 void defaultRobot(void);
 int initWorld(int avenues, int streets);
 int initRobot(int avenue, int street, int direction, int beepers);

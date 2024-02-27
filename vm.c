@@ -510,8 +510,7 @@ static InterpretResult run() {
             runtimeError("Data error.");
             return INTERPRET_RUNTIME_ERROR;
           }
-          karel.color = AS_NUMBER(v);
-          world[karel.avenue][karel.street].color = karel.color;
+          setColor(AS_NUMBER(v));
         }
         break;
       case OP_DONE: {

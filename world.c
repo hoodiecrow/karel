@@ -239,6 +239,11 @@ void moveToNext(void) {
   world[karel.avenue][karel.street].color = karel.color;
 }
 
+void setColor(int color) {
+    karel.color = color;
+    world[karel.avenue][karel.street].color = color;
+}
+
 int karely(void) {
     return actualy(karel.street);
 }
