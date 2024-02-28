@@ -326,7 +326,7 @@ void markFirstMove(void) {
 }
 
 void showError(const char *msg) {
-    mvprintw(0, 0, "Error--%s", msg);
+    mvprintw(0, 0, "Emergency Shutdown--%s", msg);
     clrtoeol();
     refresh();
     getch();

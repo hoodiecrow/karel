@@ -253,6 +253,9 @@ int karelx(void) {
 }
 
 void showRobot(void) {
+    if (karel.color != 0) {
+        attrset(COLOR_PAIR(karel.color));
+    }
     switch (karel.direction) {
         case 0: mvaddch(karely(), karelx(), '>'); break;
         case 1: mvaddch(karely(), karelx(), '^'); break;
@@ -260,6 +263,7 @@ void showRobot(void) {
         case 3: mvaddch(karely(), karelx(), 'v'); break;
         default: return;
     }
+    attrset(A_NORMAL);
     refresh();
 }
 
@@ -273,6 +277,7 @@ void showCorner(int avenue, int street) {
         mvprintw(actualy(street), actualx(avenue)-1, "%2d", world[avenue][street].beepers);
     }
     attrset(A_NORMAL);
+    refresh();
 }
 
 void turnLeft(void) {
