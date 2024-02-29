@@ -316,6 +316,8 @@ static void concatenate() {
   push(OBJ_VAL(result));
 }
 
+bool notExecDone;
+
 void markFirstMove(void) {
   mvaddstr(0, 0, "Press any key to start");
   clrtoeol();
@@ -323,10 +325,11 @@ void markFirstMove(void) {
   getch();
   mvaddstr(0, 0, "");
   clrtoeol();
+  notExecDone = true;
 }
 
 void showError(const char *msg) {
-    mvprintw(0, 0, "Emergency Shutdown--%s", msg);
+    mvprintw(0, 0, "Error Shutdown--%s", msg);
     clrtoeol();
     refresh();
     getch();
@@ -531,6 +534,7 @@ static InterpretResult run() {
         clrtoeol();
         refresh();
         getch();
+        notExecDone = false;
         }
         break;
       case OP_GET:
@@ -565,6 +569,11 @@ static InterpretResult run() {
           incrementBeepersAtCorner();
         break;
       case OP_RETURN: {
+        if (notExecDone) {
+          showError("'done' not executed");
+          runtimeError("Terminating without 'done'.");
+          return INTERPRET_RUNTIME_ERROR;
+        }
         Value result = pop();
         vm.frameCount--;
         if (vm.frameCount == 0) {
