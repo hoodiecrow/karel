@@ -100,6 +100,8 @@ int disassembleInstruction(Chunk* chunk, int offset) {
       return simpleInstruction("OP_GET", offset);
     case OP_LEFT:
       return directionInstruction("OP_LEFT", offset);
+    case OP_COLOR:
+      return simpleInstruction("OP_COLOR", offset);
     case OP_MOVE:
       return positionInstruction("OP_MOVE", offset);
     case OP_PUT:

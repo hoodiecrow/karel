@@ -316,7 +316,7 @@ static void concatenate() {
   push(OBJ_VAL(result));
 }
 
-bool notExecDone;
+bool notExecDone = true;
 
 void markFirstMove(void) {
   mvaddstr(0, 0, "Press any key to start");
@@ -325,7 +325,6 @@ void markFirstMove(void) {
   getch();
   mvaddstr(0, 0, "");
   clrtoeol();
-  notExecDone = true;
 }
 
 void showError(const char *msg) {
@@ -482,12 +481,17 @@ static InterpretResult run() {
         break;
       }
       case OP_MOVE:
+        if (!notExecDone) {
+            showError("'done' has been executed");
+            runtimeError("After shutdown.");
+            return INTERPRET_RUNTIME_ERROR;
+        }
         if (firstMove) {
             markFirstMove();
             firstMove = false;
         }
         if (facingIsBlocked(0)) {
-            showError("movement is blocked\n");
+            showError("movement is blocked");
             runtimeError("Forbidden movement.");
             return INTERPRET_RUNTIME_ERROR;
         }
@@ -498,6 +502,11 @@ static InterpretResult run() {
         napms(900);
         break;
       case OP_LEFT:
+        if (!notExecDone) {
+            showError("'done' has been executed");
+            runtimeError("After shutdown.");
+            return INTERPRET_RUNTIME_ERROR;
+        }
         if (firstMove) {
             markFirstMove();
             firstMove = false;
@@ -506,17 +515,30 @@ static InterpretResult run() {
         showRobot();
         napms(900);
         break;
-      case OP_COLOR: {
-          Value v = pop();
-          if (!IS_NUMBER(v)) {
-              showError("color must be a number");
+      case OP_COLOR:
+        if (!notExecDone) {
+            showError("'done' has been executed");
+            runtimeError("After shutdown.");
+            return INTERPRET_RUNTIME_ERROR;
+        }
+        if (firstMove) {
+            markFirstMove();
+            firstMove = false;
+        }
+        Value v = pop();
+        if (!IS_NUMBER(v)) {
+            showError("color must be a number");
             runtimeError("Data error.");
             return INTERPRET_RUNTIME_ERROR;
-          }
-          setColor(AS_NUMBER(v));
         }
+        setColor(AS_NUMBER(v));
         break;
       case OP_DONE: {
+        if (!notExecDone) {
+            showError("'done' has been executed");
+            runtimeError("After shutdown.");
+            return INTERPRET_RUNTIME_ERROR;
+        }
         // compare world and robot to expected outcome
         bool homeIsOk = false;
         if (homeDefined()) {
@@ -538,6 +560,11 @@ static InterpretResult run() {
         }
         break;
       case OP_GET:
+        if (!notExecDone) {
+            showError("'done' has been executed");
+            runtimeError("After shutdown.");
+            return INTERPRET_RUNTIME_ERROR;
+        }
         if (firstMove) {
             markFirstMove();
             firstMove = false;
@@ -551,6 +578,11 @@ static InterpretResult run() {
           incrementBeeperBag();
         break;
       case OP_PUT:
+        if (!notExecDone) {
+            showError("'done' has been executed");
+            runtimeError("After shutdown.");
+            return INTERPRET_RUNTIME_ERROR;
+        }
         if (firstMove) {
             markFirstMove();
             firstMove = false;
