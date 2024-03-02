@@ -104,7 +104,7 @@ int placeHome(int avenue, int street, int direction) {
     home.avenue = avenue;
     home.street = street;
     move(actualy(street), actualx(avenue));
-    home.direction = direction;
+    home.direction = abs(direction) % 4;
     switch (direction) {
         case 0: addch(A_REVERSE | '>'); break;
         case 1: addch(A_REVERSE | '^'); break;
