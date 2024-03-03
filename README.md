@@ -35,6 +35,9 @@ The functions `world`, `home`, `robot`, `beepers`, and `wall` have been added to
 There are some problems with native functions, e.g. how runtime errors in one break the interpreter and cause a segfault, leaving curses unterminated. I need to propagate the error to the run function and return from that with a runtime error result. 
 I could scrap the native function method and compile functions like `world` to bytecodes to run entirely inside the VM, but for now I'm trying out the option of adding a special ERR value and modifying `callValue` to examine the result of the native function before pushing it on the stack. If the return value is the ERR value, `callValue` returns false, causing `run` to end with an RTE. If the return value is any other value, it is pushed on the stack and `callValue` returns normally.
 
+## Extending the vocabulary
+New pseudo-instructions, such as 'right', can be added by creating Lox functions. The grammar of Lox demands that they are executed as a function call, using the `()` operator.
+
 ## Acknowledgements
 clox belongs to Robert Nystrom. Karel the Robot was designed by Richard E. Pattis. 
 
