@@ -1,9 +1,16 @@
 # karel
 An implementation of the classic Karel the Robot educational program, based on clox from the book "Crafting Interpreters" by Robert Nystrom.
 
-## Lox/clox
 The original Karel used a programming language vaguely similar to Pascal for programming the robot. This implementation uses Lox instead, a small, dynamic language. The bytecode interpreter for Lox, clox, serves as the engine for this implementation of Karel.
 The version I am using here uses code from up to and including chapter 24 of the book. That is, it doesn't have closures, garbage collection, or OOP features.
+
+## The world
+The functions `world`, `home`, `robot`, `beepers`, and `wall` have been added to initialize the world parts. They are defined using the native function interface (such as it is).
+- `world(x, y)` sets the size of the world to _x_ avenues and _y_ streets; neither can exceed 11
+- `home(x, y, d)` sets the location and direction the robot is supposed to end up in to _x_ avenue, _y_ street, and _d_ direction (if not set, the robot can shut down anywhere)
+- `robot(x, y, d, n)` sets the robot at _x_ avenue, _y_ street, facing direction _d_ (`EAST` (0), `NORTH` (1), `WEST` (2), or `SOUTH` (3)), and carrying _n_ beepers
+- `beepers(x, y, n)` sets down _n_ beepers at _x_ avenue, _y_ street
+- `wall(x, y, d)` sets down a wall near _x_ avenue, _y_ street, blocking the way in direction _d_ (and also from the opposite direction)
 
 ## karel
 I have added seven statement types to clox to make controlling the robot possible.
@@ -17,14 +24,6 @@ I have added seven statement types to clox to make controlling the robot possibl
 - `done` -- shut down the robot
 
 The arena or world karel moves in will be displayed as ncurses character graphics.
-
-### Initialization
-The functions `world`, `home`, `robot`, `beepers`, and `wall` have been added to initialize the world parts. They are defined using the native function interface (such as it is).
-- `world(x, y)` sets the size of the world to _x_ avenues and _y_ streets; neither can exceed 16
-- `home(x, y, d)` sets the location and direction the robot is supposed to end up in to _x_ avenue, _y_ street, and _d_ direction (if not set, the robot can shut down anywhere)
-- `robot(x, y, d, n)` sets the robot at _x_ avenue, _y_ street, facing direction _d_ (`EAST` (0), `NORTH` (1), `WEST` (2), or `SOUTH` (3)), and carrying _n_ beepers
-- `beepers(x, y, n)` sets down _n_ beepers at _x_ avenue, _y_ street
-- `wall(x, y, d)` sets down a wall near _x_ avenue, _y_ street, blocking the way in direction _d_ (and also from the opposite direction)
 
 ### Conditions
 - `facing(dir)` is true if the robot is facing in the given direction
