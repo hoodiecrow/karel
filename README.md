@@ -12,18 +12,22 @@ The functions `world`, `home`, `robot`, `beepers`, and `wall` have been added to
 - `beepers(x, y, n)` sets down _n_ beepers at _x_ avenue, _y_ street
 - `wall(x, y, d)` sets down a wall near _x_ avenue, _y_ street, blocking the way in direction _d_ (and also from the opposite direction)
 
-## karel
-I have added seven statement types to clox to make controlling the robot possible.
+The world karel moves in is displayed as ncurses character graphics.
 
+## Primitive instructions
+Besides the primitives of the Lox language, I have added the following to control the robot:
 - `move` -- advance one corner
 - `left` -- change facing 90° to the left
 - `put` -- put a beeper on the corner
 - `get` -- remove a beeper from the corner
 - `color(n)` -- color the corner with color pair #_n_
-- `repeat(n) statement` -- repeat a statement _n_ times
-- `done` -- shut down the robot
+- `done` -- shut down the robot, finishing the task
 
-The arena or world karel moves in will be displayed as ncurses character graphics.
+I have also added an extra iteration statement:
+- `repeat(n) statement` -- repeat a statement _n_ times
+
+## Extending the vocabulary
+New pseudo-instructions, such as 'right', can be added by creating Lox functions. The grammar of Lox demands that they are executed as a function call, using the `()` operator. The body of a Lox function is always a block, so there is no limitation as in original Karel where the new instruction has a single instruction in its body.
 
 ### Conditions
 - `facing(dir)` is true if the robot is facing in the given direction
@@ -34,9 +38,6 @@ The arena or world karel moves in will be displayed as ncurses character graphic
 ### Calling native functions
 There are some problems with native functions, e.g. how runtime errors in one break the interpreter and cause a segfault, leaving curses unterminated. I need to propagate the error to the run function and return from that with a runtime error result. 
 I could scrap the native function method and compile functions like `world` to bytecodes to run entirely inside the VM, but for now I'm trying out the option of adding a special ERR value and modifying `callValue` to examine the result of the native function before pushing it on the stack. If the return value is the ERR value, `callValue` returns false, causing `run` to end with an RTE. If the return value is any other value, it is pushed on the stack and `callValue` returns normally.
-
-## Extending the vocabulary
-New pseudo-instructions, such as 'right', can be added by creating Lox functions. The grammar of Lox demands that they are executed as a function call, using the `()` operator. The body of a Lox function is always a block, so there is no limitation as in original Karel where the new instruction has a single instruction in its body.
 
 ## Acknowledgements
 clox belongs to Robert Nystrom. Karel the Robot was designed by Richard E. Pattis. 
