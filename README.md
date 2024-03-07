@@ -5,7 +5,7 @@ The original Karel used a programming language vaguely similar to Pascal for pro
 The version I am using here uses code from up to and including chapter 24 of the book. That is, it doesn't have closures, garbage collection, or OOP features.
 
 ## The world
-The functions `world`, `home`, `robot`, `beepers`, and `wall` have been added to initialize the world parts. They are defined using the native function interface (such as it is).
+The functions `world`, `home`, `robot`, `beepers`, and `wall` have been added to set up the world. They are defined using the native function interface (such as it is).
 - `world(x, y)` sets the size of the world to _x_ avenues and _y_ streets; neither can exceed 11
 - `home(x, y, d)` sets the location and direction the robot is supposed to end up in to _x_ avenue, _y_ street, and _d_ direction (if not set, the robot can shut down anywhere)
 - `robot(x, y, d, n)` sets the robot at _x_ avenue, _y_ street, facing direction _d_ (`EAST` (0), `NORTH` (1), `WEST` (2), or `SOUTH` (3)), and carrying _n_ beepers
