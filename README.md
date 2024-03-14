@@ -29,6 +29,10 @@ I have also added an extra iteration statement:
 ## Extending the vocabulary
 New pseudo-instructions, such as 'right', can be added by creating Lox functions. The grammar of Lox demands that they are executed as a function call, using the `()` operator. The body of a Lox function is always a block, so there is no limitation as in original Karel where the new instruction has a single instruction in its body.
 
+## Conditional statements
+
+## Iterative statements
+
 ### Conditions
 - `facing(dir)` is true if the robot is facing in the given direction
 - `blocked(facing)` is true if there is a wall in the `FRONT` (0), `LEFT` (1), or `RIGHT` (-1) facing
