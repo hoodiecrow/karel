@@ -30,14 +30,15 @@ I have also added an extra iteration statement:
 New pseudo-instructions, such as 'right', can be added by creating Lox functions. The grammar of Lox demands that they are executed as a function call, using the `()` operator. The body of a Lox function is always a block, so there is no limitation as in original Karel where the new instruction has a single instruction in its body.
 
 ## Conditional statements
-
-## Iterative statements
+The original Karel `IF condition THEN statement` is replaced by the Lox `if (condition) statement` statement.
 
 ### Conditions
 - `facing(dir)` is true if the robot is facing in the given direction
-- `blocked(facing)` is true if there is a wall in the `FRONT` (0), `LEFT` (1), or `RIGHT` (-1) facing
-- `beepersAtCorner()` is true if there is at least one beeper at the corner where the robot is located
-- `beeperBagEmpty()` is true if there are no beepers in the robot's beeper bag
+- `seeWall(facing)` is true if there is a wall in the `FRONT` (0), `LEFT` (1), or `RIGHT` (-1) facing
+- `hearBeepers()` is true if there is at least one beeper at the corner where the robot is located
+- `carryBeepers()` is true if there is at least one beepers in the robot's beeper bag
+
+## Iterative statements
 
 ### Calling native functions
 There are some problems with native functions, e.g. how runtime errors in one break the interpreter and cause a segfault, leaving curses unterminated. I need to propagate the error to the run function and return from that with a runtime error result. 
