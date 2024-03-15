@@ -165,6 +165,21 @@ static Value condBlockedFacingNative(int argCount, Value* args) {
     return BOOL_VAL(facingIsBlocked(f));
 }
 
+static Value condColorNative(int argCount, Value* args) {
+    if (argCount != 1) {
+        runtimeError("Expected 1 arguments but got %d.", argCount);
+        return ERR_VAL;
+    }
+    Value color = args[0];
+    if (!IS_NUMBER(color)) {
+        runtimeError("color is not a number.");
+        return ERR_VAL;
+    }
+    int n = AS_NUMBER(color);
+    return BOOL_VAL(seeColor(n));
+}
+
+
 static Value condBeepersAtCornerNative(int argCount, Value* args) {
     if (argCount != 0) {
         runtimeError("Expected 0 arguments but got %d.", argCount);
@@ -173,12 +188,12 @@ static Value condBeepersAtCornerNative(int argCount, Value* args) {
     return BOOL_VAL(!noBeepersAtCorner());
 }
 
-static Value condBeeperBagEmptyNative(int argCount, Value* args) {
+static Value condBeeperBagNotEmptyNative(int argCount, Value* args) {
     if (argCount != 0) {
         runtimeError("Expected 0 arguments but got %d.", argCount);
         return ERR_VAL;
     }
-    return BOOL_VAL(beeperBagEmpty());
+    return BOOL_VAL(!beeperBagEmpty());
 }
 
 #pragma clang diagnostic pop
@@ -232,9 +247,10 @@ void initVM() {
   defineNative("beepers", beepersNative);
   defineNative("wall", wallNative);
   defineNative("facing", condFacingDirNative);
-  defineNative("blocked", condBlockedFacingNative);
-  defineNative("beepersAtCorner", condBeepersAtCornerNative);
-  defineNative("beeperBagEmpty", condBeeperBagEmptyNative);
+  defineNative("seeWall", condBlockedFacingNative);
+  defineNative("seeColor", condColorNative);
+  defineNative("hearBeeper", condBeepersAtCornerNative);
+  defineNative("carryBeeper", condBeeperBagNotEmptyNative);
 }
 
 void freeVM() {

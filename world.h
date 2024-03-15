@@ -51,6 +51,7 @@ int placeBeepers(int avenue, int street, int number);
 int placeWall(int avenue, int street, int direction);
 bool facingDirection(int direction);
 bool facingIsBlocked(int facing);
+bool seeColor(int n);
 bool beeperBagEmpty(void);
 bool noBeepersAtCorner(void);
 void decrementBeeperBag(void);

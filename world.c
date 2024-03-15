@@ -302,3 +302,8 @@ bool facingIsBlocked(int facing) {
     else
         return false; // unreachable
 }
+
+bool seeColor(int n) {
+    return world[karel.avenue][karel.street].color == n;
+}
+
