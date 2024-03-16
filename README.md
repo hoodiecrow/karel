@@ -30,7 +30,7 @@ I have also added an extra iteration statement:
 New pseudo-instructions, such as 'right', can be added by creating Lox functions. The grammar of Lox demands that they are executed as a function call, using the `()` operator. The body of a Lox function is always a block, so there is no limitation as in original Karel where the new instruction has a single instruction in its body.
 
 ## Conditional statements
-The original Karel `IF condition THEN statement` is replaced by the Lox `if (condition) statement` statement.
+The original Karel `IF condition THEN instruction` is replaced by the Lox `if (condition) statement` statement.
 
 ### Conditions
 - `facing(dir)` is true if the robot is facing in the given direction
@@ -38,6 +38,10 @@ The original Karel `IF condition THEN statement` is replaced by the Lox `if (con
 - `seeColor(number)` is true if the current corner is colored with color number _number_
 - `hearBeepers()` is true if there is at least one beeper at the corner where the robot is located
 - `carryBeepers()` is true if there is at least one beeper in the robot's beeper bag
+
+Conditions don't have inverse forms: use the `!` operator for that.
+
+`IF condition THEN instruction ELSE instruction` becomes `if (condition) statement else statement`
 
 ## Iterative statements
 
