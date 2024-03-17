@@ -23,14 +23,11 @@ Besides the primitives of the Lox language, I have added the following to contro
 - `color(n)` -- color the corner with color pair #_n_
 - `done` -- shut down the robot, finishing the task
 
-I have also added an extra iteration statement:
-- `repeat(n) statement` -- repeat a statement _n_ times
-
 ## Extending the vocabulary
 New pseudo-instructions, such as 'right', can be added by creating Lox functions. The grammar of Lox demands that they are executed as a function call, using the `()` operator. The body of a Lox function is always a block, so there is no limitation as in original Karel where the new instruction has a single instruction in its body.
 
 ## Conditional statements
-The original Karel `IF condition THEN instruction` is replaced by the Lox `if (condition) statement` statement.
+The original Karel `IF/THEN` instruction is replaced by the Lox `if (`_condition_`) `_statement_ statement.
 
 ### Conditions
 - `facing(dir)` is true if the robot is facing in the given direction
@@ -41,9 +38,12 @@ The original Karel `IF condition THEN instruction` is replaced by the Lox `if (c
 
 Conditions don't have inverse forms: use the `!` operator for that.
 
-`IF condition THEN instruction ELSE instruction` becomes `if (condition) statement else statement`
+The `IF/THEN/ELSE` instruction becomes `if (`_condition_`) `_statementT_` else `_statementF_.
 
 ## Iterative statements
+
+I have also added an extra iteration statement:
+- `repeat(`_n_`) `_statement_ -- repeat a _statement_ _n_ times
 
 ### Calling native functions
 There are some problems with native functions, e.g. how runtime errors in one break the interpreter and cause a segfault, leaving curses unterminated. I need to propagate the error to the run function and return from that with a runtime error result. 
