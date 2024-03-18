@@ -29,14 +29,14 @@ New pseudo-instructions, such as 'right', can be added by creating Lox functions
 ## Conditional statements
 The original Karel `IF/THEN` instruction is replaced by the Lox `if (`_condition_`) `_statement_ statement.
 
-### Conditions
+### Tests
 - `facing(dir)` is true if the robot is facing in the given direction
 - `seeWall(facing)` is true if there is a wall in the `FRONT` (0), `LEFT` (1), or `RIGHT` (-1) facing
 - `seeColor(number)` is true if the current corner is colored with color number _number_
 - `hearBeepers()` is true if there is at least one beeper at the corner where the robot is located
 - `carryBeepers()` is true if there is at least one beeper in the robot's beeper bag
 
-Conditions don't have inverse forms: use the `!` operator for that.
+Tests don't have inverse forms: use the `!` operator for that.
 
 The `IF/THEN/ELSE` instruction becomes `if (`_condition_`) `_statementT_` else `_statementF_.
 
