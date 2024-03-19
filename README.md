@@ -32,7 +32,7 @@ The original Karel `IF/THEN` instruction is replaced by the Lox `if (`_condition
 ### Tests
 - `facing(dir)` is true if the robot is facing in the given direction
 - `seeWall(facing)` is true if there is a wall in the `FRONT` (0), `LEFT` (1), or `RIGHT` (-1) facing
-- `seeColor(number)` is true if the current corner is colored with color number _number_
+- `seeColor(number)` is true if the current corner is colored with color pair _number_
 - `hearBeepers()` is true if there is at least one beeper at the corner where the robot is located
 - `carryBeepers()` is true if there is at least one beeper in the robot's beeper bag
 
