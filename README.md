@@ -45,14 +45,15 @@ The `IF/THEN/ELSE` instruction becomes `if (`_condition_`) `_statementT_` else `
 
 ## Iterative statements
 
-I have also added an extra iteration statement:
-- `repeat(`_n_`) `_statement_ -- repeat a _statement_ _n_ times
+The Karel `ITERATE/TIMES` instruction is implemented as a `repeat (` _n_ `) ` _statement_ statement, which repeats its _statement_ _n_ times.
 
-### Calling native functions
+The `WHILE/DO` instruction corresponds to the Lox `while (` _condition_ `) ` _statement_ statement.
+
+## Calling native functions
 There are some problems with native functions, e.g. how runtime errors in one break the interpreter and cause a segfault, leaving curses unterminated. I need to propagate the error to the run function and return from that with a runtime error result. 
 I could scrap the native function method and compile functions like `world` to bytecodes to run entirely inside the VM, but for now I'm trying out the option of adding a special ERR value and modifying `callValue` to examine the result of the native function before pushing it on the stack. If the return value is the ERR value, `callValue` returns false, causing `run` to end with an RTE. If the return value is any other value, it is pushed on the stack and `callValue` returns normally.
 
-### Evaluating the outcome
+## Evaluating the outcome
 This part is still being planned. One possible way is to divide the script into `initial`, `task`, and `final` sections, with beepers() and colors() (and possibly home()) calls in the `final` section setting up checks against the state of the world after performing the task. Another way is to add cases that demonstrate presence or absence of beepers, or the same for color.
 
 ## Acknowledgements
