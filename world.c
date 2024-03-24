@@ -47,18 +47,23 @@ int initWorld(int avenues, int streets) {
         world[a][s].wallWest = true;
         showWall(a, s, 2);
     }
+#if 0
+    // according to Karel the robot, the arena is only delimited in the west and south
     for (int a = NUM_AVENUES, s = 1; s <= NUM_STREETS; s++) {
         world[a][s].wallEast = true;
         showWall(a, s, 0);
     }
+#endif
     for (int a = 1, s = 1; a <= NUM_AVENUES; a++) {
         world[a][s].wallSouth = true;
         showWall(a, s, 3);
     }
+#if 0
     for (int a = 1, s = NUM_STREETS; a <= NUM_AVENUES; a++) {
         world[a][s].wallNorth = true;
         showWall(a, s, 1);
     }
+#endif
     for (int a = 1; a <= NUM_AVENUES; a++) {
         mvprintw(actualy(0), actualx(a)-1, "%2d", a);
     }
