@@ -7,7 +7,6 @@ The version I am using here uses code from up to and including chapter 24 of the
 ## The world
 The functions `world`, `home`, `robot`, `beepers`, and `wall` have been added to set up the world. They are defined using the native function interface (such as it is).
 - `world(x, y)` sets the size of the world to _x_ avenues and _y_ streets; neither can exceed 11
-- `home(x, y, d)` sets the location and direction the robot is supposed to end up in to _x_ avenue, _y_ street, and _d_ direction (if not set, the robot can shut down anywhere)
 - `robot(x, y, d, n)` places the robot at _x_ avenue, _y_ street, facing direction _d_ (`EAST` (0), `NORTH` (1), `WEST` (2), or `SOUTH` (3)), and carrying _n_ beepers
 - `beepers(x, y, n)` places _n_ beepers at _x_ avenue, _y_ street
 - `wall(x, y, d)` places a wall near _x_ avenue, _y_ street, blocking the way in direction _d_ (and also from the opposite direction)
@@ -57,6 +56,8 @@ I could scrap the native function method and compile functions like `world` to b
 
 ## Evaluating the outcome
 This part is still being planned. One possible way is to divide the script into `initial`, `task`, and `final` sections, with beepers() and colors() (and possibly home()) calls in the `final` section setting up checks against the state of the world after performing the task. Another way is to add cases that demonstrate presence or absence of beepers, or the same for color.
+
+- `home(x, y, d)` sets the location and direction the robot is supposed to end up in to _x_ avenue, _y_ street, and _d_ direction (if not set, the robot can shut down anywhere)
 
 ## Acknowledgements
 clox belongs to Robert Nystrom. Karel the Robot was designed by Richard E. Pattis. 
