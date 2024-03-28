@@ -5,13 +5,13 @@ The original Karel used a programming language vaguely similar to Pascal for pro
 The version I am using here uses code from up to and including chapter 24 of the book. That is, it doesn't have closures, garbage collection, or OOP features.
 
 ## The world
-The functions `world`, `home`, `robot`, `beepers`, and `wall` have been added to set up the world. They are defined using the native function interface (such as it is).
+The functions `world`, `robot`, `beepers`, and `wall` have been added to set up the world. They are defined using the native function interface (such as it is).
 - `world(x, y)` sets the size of the world to _x_ avenues and _y_ streets; neither can exceed 11
 - `robot(x, y, d, n)` places the robot at _x_ avenue, _y_ street, facing direction _d_ (`EAST` (0), `NORTH` (1), `WEST` (2), or `SOUTH` (3)), and carrying _n_ beepers
 - `beepers(x, y, n)` places _n_ beepers at _x_ avenue, _y_ street
 - `wall(x, y, d)` places a wall near _x_ avenue, _y_ street, blocking the way in direction _d_ (and also from the opposite direction)
 
-The world karel moves in is displayed as ncurses character graphics.
+The world Karel moves in is displayed using ncurses character graphics.
 
 ## Primitive instructions
 Besides the primitives of the Lox language, I have added the following to control the robot:
