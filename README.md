@@ -19,7 +19,7 @@ Besides the primitives of the Lox language, I have added the following to contro
 - `left` -- change facing 90° to the left
 - `put` -- put a beeper on the corner
 - `get` -- remove a beeper from the corner
-- `color(n)` -- color the corner with color pair #_n_
+- `color(n)` -- color the corner with color pair #_n_ (0 erases color)
 - `done` -- shut down the robot, finishing the task
 
 ## Extending the vocabulary
