@@ -46,9 +46,9 @@ The `IF/THEN/ELSE` instruction becomes `if (`_condition_`) `_statementT_` else `
 
 ## Iterative statements
 
-The Karel `ITERATE/TIMES` instruction is implemented as a `repeat (` _n_ `) ` _statement_ statement, which repeats its _statement_ _n_ times. It is an extension to Lox.
+The Karel `ITERATE` instruction is implemented as a `repeat (` _n_ `) ` _statement_ statement, which repeats its _statement_ _n_ times. It is an extension to Lox.
 
-The `WHILE/DO` instruction corresponds to the Lox `while (` _condition_ `) ` _statement_ statement.
+The `WHILE` instruction corresponds to the Lox `while (` _condition_ `) ` _statement_ statement.
 
 ## Calling native functions
 There are some problems with native functions, e.g. how runtime errors in one break the interpreter and cause a segfault, leaving curses unterminated. I need to propagate the error to the run function and return from that with a runtime error result. 
