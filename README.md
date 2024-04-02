@@ -23,7 +23,7 @@ Besides the primitives of the Lox language, I have added the following to contro
 - `done` -- shut down the robot, finishing the task
 
 ## Extending the vocabulary
-New pseudo-instructions, such as 'right', can be added by creating Lox functions. 
+New instructions, such as 'right', can be added by creating Lox functions. 
 
 ```
 fun right () {
@@ -31,7 +31,9 @@ fun right () {
 }
 ```
 
-The grammar of Lox demands that they are executed as a function call, using the `()` operator (such as `right();`). The body of a Lox function is always a block, so there is no limitation as in original Karel where the new instruction has a single instruction in its body.
+The grammar of Lox demands that they are written as a function call, using the `()` operator (such as `right();`).
+
+The body of a Lox function is always a block, so there is no limitation as in original Karel where the new instruction has a single instruction in its body.
 
 ### Source code structure
 The Lox version of Karel does not use `BEGINNING-OF-PROGRAM/END-OF-PROGRAM` or `BEGINNING-OF-EXECUTION/END-OF-EXECUTION` markers. Statements to be executed are placed at the top level in the script, and statements that define new instructions are placed inside Lox functions.
