@@ -60,6 +60,10 @@ The Karel `ITERATE` instruction is implemented as a `repeat (` _n_ `) ` _stateme
 
 The `WHILE` instruction corresponds to the Lox `while (` _condition_ `) ` _statement_ statement.
 
+## Advanced handling
+
+This implementation is capable of recursively executing instructions.
+
 ## Calling native functions
 There are some problems with native functions, e.g. how runtime errors in one break the interpreter and cause a segfault, leaving curses unterminated. I need to propagate the error to the run function and return from that with a runtime error result. 
 I could scrap the native function method and compile functions like `world` to bytecodes to run entirely inside the VM, but for now I'm trying out the option of adding a special ERR value and modifying `callValue` to examine the result of the native function before pushing it on the stack. If the return value is the ERR value, `callValue` returns false, causing `run` to end with an RTE. If the return value is any other value, it is pushed on the stack and `callValue` returns normally.
