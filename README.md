@@ -1,5 +1,5 @@
 # karel
-An implementation of the classic Karel the Robot educational program, based on clox from the book "Crafting Interpreters" by Robert Nystrom.
+An implementation of the classic Karel the Robot educational program, using clox from the book "Crafting Interpreters" by Robert Nystrom as engine.
 
 The original Karel used a programming language vaguely similar to Pascal for programming the robot. This implementation uses Lox instead, a small, dynamic language. The bytecode interpreter for Lox, clox, serves as the engine for this implementation of Karel.
 The version I am using here uses code from up to and including chapter 24 of the book. That is, it doesn't have closures, garbage collection, or OOP features.
