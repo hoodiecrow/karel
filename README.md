@@ -31,7 +31,7 @@ fun right () {
 }
 ```
 
-The grammar of Lox demands that use of defined instructions are written as a function call, using the `()` operator (e.g. `right();`).
+The grammar of Lox demands that use of defined instructions be written as a function call, using the `()` operator (e.g. `right();`).  Primitive instructions do not need the `()` operator (e.g. `left;`)
 
 The body of a Lox function is always a block, so there is no limitation as in original Karel where the new instruction has a single instruction in its body.
 
