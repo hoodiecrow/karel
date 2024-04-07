@@ -42,7 +42,7 @@ The Lox version of Karel does not use `BEGINNING-OF-PROGRAM/END-OF-PROGRAM` or `
 The original Karel `IF/THEN` instruction is replaced by the Lox `if (`_condition_`) `_statement_ statement.
 
 ### Tests
-The tests reflect Karel's artificial senses and what they detect. Karel has a compass that reports facing in cardinal directions, a camera that can see blocking walls in front of, or to the right or left of, the robot. It can also see if the corner is coloured with a given colour. There is a microphone that is able to pick up the faint beeping of an active beeper, and Karel can also feel if it carries inactive beepers in its bag.
+The tests reflect Karel's artificial senses and what they detect. Karel has a compass that reports facing in cardinal directions, a camera that can see blocking walls in front of, or to the right or left of, the robot. It can also see if the corner is coloured with a given colour. There is a microphone that is able to pick up the faint beeping of an active beeper, and Karel can also feel if it carries inactive beepers in its bag or if the bag is empty.
 
 - `facing(dir)` is true if the robot is facing in the given direction
 - `seeWall(facing)` is true if there is a wall in the `FRONT` (0), `LEFT` (1), or `RIGHT` (-1) facing
