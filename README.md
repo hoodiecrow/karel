@@ -9,7 +9,7 @@ The functions `world`, `robot`, `beepers`, and `wall` have been added to set up 
 - `world(x, y)` sets the size of the world to _x_ avenues and _y_ streets; neither can exceed 11
 - `robot(x, y, d, n)` places the robot at _x_ avenue, _y_ street, facing direction _d_ (`EAST` (0), `NORTH` (1), `WEST` (2), or `SOUTH` (3)), and carrying _n_ beepers
 - `beepers(x, y, n)` places _n_ beepers at _x_ avenue, _y_ street
-- `wall(x, y, d)` places a wall near _x_ avenue, _y_ street, blocking the way in direction _d_ (and also from the opposite direction)
+- `wall(x, y, d)` places a wall near _x_ avenue, _y_ street, blocking the way in direction _d_ (and also from the opposite direction). Just as in original Karel, the western and southern edges of the world are automatically walled.
 
 The world Karel moves in is displayed using ncurses character graphics.
 
